@@ -95,6 +95,8 @@ NOTE : There is no way to detect which material is transparent and which is not,
 
 7. Add the lights to the scene. The EFT lights are quite saturated, so using the **Blackbody** colors is not necessarily the closest to the game lighting. I also like to add a cube with a **Volume scatter** to make the light rays visible.
 
+### Result
+
 Here is an example of a final result :
 <img width="1920" height="1080" alt="scene_ragman_render_eevee" src="https://github.com/user-attachments/assets/c3ff9c83-bd34-4ea0-b0dd-c2a52f183f21" />
 
