@@ -85,7 +85,7 @@ The actual scene is hidden behind objects that will be deleted by the add-on. If
 4. Check for **materials that should be transparent but are opaque**. In this example scene the GP7 gas mask does not have transparent glass. In this case go to the glass material and change the central node from "EFT_Shader_DGN" to "EFT_Shader_Hair".
 <img width="1705" height="886" alt="image" src="https://github.com/user-attachments/assets/8127991d-1a1b-41c5-80f9-27d10e3c074a" />
 
-NOTE : There is way to detect which material is transparent and which is not, it's basically hardcoded in the [tarkdata.py](https://github.com/SoyuzKerman/Tark-to-Blend/blob/main/tarkdata.py) file. I added every texture name I could find in the trader scenes, but you can also add yours in the **TRANSPARENT_NAMES** list if needed.
+NOTE : There is no way to detect which material is transparent and which is not, it's basically hardcoded in the [tarkdata.py](https://github.com/SoyuzKerman/Tark-to-Blend/blob/main/tarkdata.py) file. I added every texture name I could find in the trader scenes, but you can also add yours in the **TRANSPARENT_NAMES** list if needed.
 
 5. Do the same for **emissive** materials, for the same reasons.
 
