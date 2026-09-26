@@ -27,7 +27,7 @@ Visit [soyuzkerman.net](https://soyuzkerman.net/) for more information on the pr
 
 ### Getting level files
 
-1. Select a map of interested in the [Map List](https://github.com/SoyuzKerman/Tark-to-Blend/blob/main/map_list.csv). As an example, we will choose the Ragman scene contained in the **level643**.
+1. Select a map of interest in the [Map List](https://github.com/SoyuzKerman/Tark-to-Blend/blob/main/map_list.csv). As an example, we will choose the Ragman scene contained in the **level643** file.
 2. Load the **level** file in AssetStudio :
    - File > Load file, then go to the game folders and select the file : Escape from Tarkov > EscapeFromTarkov_Data > level643
    - Wait for a few minutes for the assets to load.
@@ -53,7 +53,7 @@ NOTE : The normal map textures are red. This is normal and the material setup ta
 The actual scene is hidden behind objects that will be deleted by the add-on. If we hide them, the actual scene becomes visible. By default, the objects look transparent because Blender interprets the *Alpha* channel of the texture as transparency, when it is not. This will be fixed by the add-on.
 
 3. If you previously put the textures in a separate folder, check if the textures are missing by using **Material Preview**. If everything is pink, the textures are missing. Go to File > External data > Find missing files, and select your "textures" folder.
-4. In the **3D Viewport**, press **N** to open the **side panel** and go to "Tark to Blend" panel.
+4. In the **3D Viewport**, press **N** to open the **side panel** and go to the "Tark to Blend" panel.
   <img width="252" height="253" alt="image" src="https://github.com/user-attachments/assets/97197bff-c7d4-4ee3-97ae-83c695efa509" />
 
 5. To use the panel :
