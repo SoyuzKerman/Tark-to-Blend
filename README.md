@@ -50,7 +50,7 @@ NOTE : The normal map textures are red. This is normal and the material setup ta
 2. Drag and drop the FBX file in the scene to import it. It should look like this :
 <img width="1000" height="500" alt="image" src="https://github.com/user-attachments/assets/6ee3e3a9-10fd-49b5-b33f-013424a8203c" />
 
-The actual scene is hidden behind objects that will be deleted by add-on. If we hide them, the actual scene becomes visible. By default, the objects look transparent because Blender interprets the *Alpha* channel of the texture as transparency, when it is not. This will be fixed by the add-on.
+The actual scene is hidden behind objects that will be deleted by the add-on. If we hide them, the actual scene becomes visible. By default, the objects look transparent because Blender interprets the *Alpha* channel of the texture as transparency, when it is not. This will be fixed by the add-on.
 
 3. If you previously put the textures in a separate folder, check if the textures are missing by using **Material Preview**. If everything is pink, the textures are missing. Go to File > External data > Find missing files, and select your "textures" folder.
 4. In the **3D Viewport**, press **N** to open the **side panel** and go to "Tark to Blend" panel.
