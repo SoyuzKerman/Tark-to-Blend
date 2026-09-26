@@ -4,8 +4,9 @@ bl_info = {
     "version": (1,0,0),
     "blender": (5, 2, 0),
     "location": "3D Viewport > Sidebar > Tark to Blend",
-    "description": "Scene cleanup and material setup for Escape from Tarkov levels imported with Assetstudio.",
+    "description": "Scene cleanup and material setup for Escape from Tarkov levels imported with Assetstudio",
     "category": "Materials",
+    "doc_url" : "https://github.com/SoyuzKerman/Tark-to-Blend"
 }
 
 
@@ -114,10 +115,11 @@ class OT_Main(bpy.types.Operator) :
         NG_EFT_Opaque = nodes.NG_Shader(node_name = "EFT_Shader_DGN")
         NG_EFT_Emissive = nodes.NG_Shader_Em(node_name = "EFT_Shader_Emissive")
         NG_EFT_Transparent = nodes.NG_Shader_Hair(node_name = "EFT_Shader_Hair")
+        NG_EFT_Puddle = nodes.NG_Shader_Puddle(node_name = "EFT_Puddle")
         print("Node groups created")
 
         assignmat.start(NODE_DELETE_LIST, DGN_TYPE_LIST, ATLAS_EXCEPTIONS, TRANSPARENT_NAMES, OBJ_TO_DELETE, EMISSIVE_TYPE_LIST,
-                       NG_EFT_Normal, NG_EFT_Opaque, NG_EFT_Emissive, NG_EFT_Transparent, MAKE_CSV, TEX_PATH)
+                       NG_EFT_Normal, NG_EFT_Opaque, NG_EFT_Emissive, NG_EFT_Transparent, NG_EFT_Puddle,MAKE_CSV, TEX_PATH)
 
         Time_Final_s = round(time.time()-Time_0,6)
         print(f"Execution time : {Time_Final_s} s")

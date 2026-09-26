@@ -253,7 +253,7 @@ def Find_G_Texture(Nodes, Has_Diffuse, Has_Normal, D_Texture, N_Texture, Is_DGN,
 def Build_Material_Setup(Mat, Nodes, Links, Has_Diffuse, Has_Normal, Has_Glossy, Is_Transparent,
                         Has_Emissive, D_Texture, N_Texture, G_Texture, E_Texture,
                         NG_EFT_Opaque, NG_EFT_Transparent, NG_EFT_Emissive, NG_EFT_Normal,
-                        NODE_DELETE_LIST) :
+                        NG_EFT_Puddle, NODE_DELETE_LIST) :
     # Adds nodes to the material node tree and connects them.
     # Nodes : Mat.node_tree.nodes
     # Links : Mat.node_tree.links
@@ -287,6 +287,9 @@ def Build_Material_Setup(Mat, Nodes, Links, Has_Diffuse, Has_Normal, Has_Glossy,
         
         elif Is_Transparent :
             Shader_Group = Instantiate_Group(Nodes, NG_EFT_Transparent)
+
+        elif "puddle" in Mat.name.lower() :
+            Shader_Group = Instantiate_Group(Nodes, NG_EFT_Puddle)
         
         else : 
             Shader_Group = Instantiate_Group(Nodes, NG_EFT_Opaque)
@@ -439,7 +442,7 @@ def Is_Shader_Emissive(Nodes, TEX_PATH, D_Texture, Is_DGN, Emissive_Texture_Name
 #%% MAIN
 
 def start(NODE_DELETE_LIST, DGN_TYPE_LIST, ATLAS_EXCEPTIONS, TRANSPARENT_NAMES, OBJ_TO_DELETE, EMISSIVE_TYPE_LIST,
-          NG_EFT_Normal, NG_EFT_Opaque, NG_EFT_Emissive, NG_EFT_Transparent, MAKE_CSV, TEX_PATH) :
+          NG_EFT_Normal, NG_EFT_Opaque, NG_EFT_Emissive, NG_EFT_Transparent, NG_EFT_Puddle, MAKE_CSV, TEX_PATH) :
 
     print("------ EFT MATERIAL SETUP START ------")
 
@@ -479,7 +482,7 @@ def start(NODE_DELETE_LIST, DGN_TYPE_LIST, ATLAS_EXCEPTIONS, TRANSPARENT_NAMES, 
         Build_Material_Setup(Mat, Nodes, Links, Has_Diffuse, Has_Normal, Has_Glossy, Is_Transparent,
                             Has_Emissive, D_Texture, N_Texture, G_Texture, E_Texture,
                             NG_EFT_Opaque, NG_EFT_Transparent, NG_EFT_Emissive, NG_EFT_Normal,
-                            NODE_DELETE_LIST)
+                            NG_EFT_Puddle, NODE_DELETE_LIST)
 
         Add_To_Log(Mat, Mat_Log_List, Texture_Log_List, Transparent_Log_List,
                 Emissive_Log_List, Has_Diffuse, Has_Normal, Has_Glossy,

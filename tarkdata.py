@@ -45,7 +45,9 @@ def load() :
                     "item_barter_valuable_rolex_Glass", "lab_glass",
                     "Glass_stains", "paper_garbage2_footsteps", "Floor_metal_grate_rust_01",
                     "City_broken_glass_atlas", "Flowers_D", "lab_ChemProtectGlass",
-                    "bulletholes_concrete", "Reserve_factroy_glass"]
+                    "bulletholes_concrete", "Reserve_factroy_glass",
+                    "City_glass_broken_transparent", "City_Asphalt_Trim",
+                    "Vendors_snow_footprint"]
 
     OBJ_TO_DELETE = ["Cube", "BLOCKER", "Blocker", "LOD1", "LOD2", "LOD3", "LOD4",
                 "Box0", "Plane", "shadow", "Shadow", "SHADOW", "collider",

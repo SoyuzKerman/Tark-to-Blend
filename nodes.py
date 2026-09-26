@@ -978,6 +978,7 @@ def NG_Shader_Em(node_name = "EFT_Shader_Emissive"):
 
 # Transparent shader
 def NG_Shader_Hair(node_name = "EFT_Shader_Hair"):
+
     """Initialize EFT_Shader_Hair node group"""
     eft_shader_hair_1 = bpy.data.node_groups.new(type = 'ShaderNodeTree', name = node_name)
 
@@ -1245,3 +1246,205 @@ def NG_Shader_Hair(node_name = "EFT_Shader_Hair"):
     )
 
     return eft_shader_hair_1
+
+
+def NG_Shader_Puddle(node_name = "EFT_Puddle"):
+    """Initialize EFT_Puddle node group"""
+    eft_puddle_1 = bpy.data.node_groups.new(type = 'ShaderNodeTree', name = node_name)
+
+    eft_puddle_1.color_tag = 'NONE'
+    eft_puddle_1.description = ""
+    eft_puddle_1.default_group_node_width = 140
+    # eft_puddle_1 interface
+
+    # Socket Shader
+    shader_socket = eft_puddle_1.interface.new_socket(name="BSDF", in_out='OUTPUT', socket_type='NodeSocketShader')
+    shader_socket.attribute_domain = 'POINT'
+    shader_socket.default_input = 'VALUE'
+    shader_socket.structure_type = 'AUTO'
+
+    # Socket Color
+    color_socket = eft_puddle_1.interface.new_socket(name="D", in_out='INPUT', socket_type='NodeSocketColor')
+    color_socket.default_value = (0.800000011920929, 0.800000011920929, 0.800000011920929, 1.0)
+    color_socket.attribute_domain = 'POINT'
+    color_socket.default_input = 'VALUE'
+    color_socket.structure_type = 'AUTO'
+
+    # Socket Alpha
+    alpha_socket = eft_puddle_1.interface.new_socket(name="D alpha", in_out='INPUT', socket_type='NodeSocketFloat')
+    alpha_socket.default_value = 0.0
+    alpha_socket.min_value = -3.4028234663852886e+38
+    alpha_socket.max_value = 3.4028234663852886e+38
+    alpha_socket.subtype = 'NONE'
+    alpha_socket.attribute_domain = 'POINT'
+    alpha_socket.default_input = 'VALUE'
+    alpha_socket.structure_type = 'AUTO'
+
+    # Initialize eft_puddle_1 nodes
+
+    # Node Principled BSDF
+    principled_bsdf = eft_puddle_1.nodes.new("ShaderNodeBsdfPrincipled")
+    principled_bsdf.name = "Principled BSDF"
+    principled_bsdf.show_options = True
+    principled_bsdf.distribution = 'MULTI_GGX'
+    principled_bsdf.subsurface_method = 'RANDOM_WALK'
+    principled_bsdf.panel_states[0].is_collapsed = True
+    principled_bsdf.panel_states[1].is_collapsed = True
+    principled_bsdf.panel_states[2].is_collapsed = False
+    principled_bsdf.panel_states[3].is_collapsed = True
+    principled_bsdf.panel_states[4].is_collapsed = True
+    principled_bsdf.panel_states[5].is_collapsed = True
+    principled_bsdf.panel_states[6].is_collapsed = True
+    principled_bsdf.panel_states[7].is_collapsed = True
+    # Metallic
+    principled_bsdf.inputs[1].default_value = 0.0
+    # Roughness
+    principled_bsdf.inputs[2].default_value = 0.09365558624267578
+    # IOR
+    principled_bsdf.inputs[3].default_value = 1.3329999446868896
+    # Thin Wall
+    principled_bsdf.inputs[5].default_value = False
+    # Normal
+    principled_bsdf.inputs[6].default_value = (0.0, 0.0, 0.0)
+    # Diffuse Roughness
+    principled_bsdf.inputs[8].default_value = 0.0
+    # Subsurface Weight
+    principled_bsdf.inputs[9].default_value = 0.0
+    # Subsurface Radius
+    principled_bsdf.inputs[10].default_value = (1.0, 0.20000000298023224, 0.10000000149011612)
+    # Subsurface Scale
+    principled_bsdf.inputs[11].default_value = 0.004999999888241291
+    # Subsurface Anisotropy
+    principled_bsdf.inputs[13].default_value = 0.0
+    # Specular IOR Level
+    principled_bsdf.inputs[14].default_value = 0.33000001311302185
+    # Specular Tint
+    principled_bsdf.inputs[15].default_value = (1.0, 1.0, 1.0, 1.0)
+    # Anisotropic
+    principled_bsdf.inputs[16].default_value = 0.0
+    # Anisotropic Rotation
+    principled_bsdf.inputs[17].default_value = 0.0
+    # Tangent
+    principled_bsdf.inputs[18].default_value = (0.0, 0.0, 0.0)
+    # Transmission Weight
+    principled_bsdf.inputs[19].default_value = 0.0
+    # Coat Weight
+    principled_bsdf.inputs[20].default_value = 0.0
+    # Coat Roughness
+    principled_bsdf.inputs[21].default_value = 0.029999999329447746
+    # Coat IOR
+    principled_bsdf.inputs[22].default_value = 1.5
+    # Coat Tint
+    principled_bsdf.inputs[23].default_value = (1.0, 1.0, 1.0, 1.0)
+    # Coat Normal
+    principled_bsdf.inputs[24].default_value = (0.0, 0.0, 0.0)
+    # Sheen Weight
+    principled_bsdf.inputs[25].default_value = 0.0
+    # Sheen Roughness
+    principled_bsdf.inputs[26].default_value = 0.5
+    # Sheen Tint
+    principled_bsdf.inputs[27].default_value = (1.0, 1.0, 1.0, 1.0)
+    # Emission Color
+    principled_bsdf.inputs[28].default_value = (1.0, 1.0, 1.0, 1.0)
+    # Emission Strength
+    principled_bsdf.inputs[29].default_value = 0.0
+    # Thin Film Thickness
+    principled_bsdf.inputs[30].default_value = 0.0
+    # Thin Film IOR
+    principled_bsdf.inputs[31].default_value = 1.3300000429153442
+
+    # Node Mix Shader
+    mix_shader = eft_puddle_1.nodes.new("ShaderNodeMixShader")
+    mix_shader.name = "Mix Shader"
+    mix_shader.show_options = True
+
+    # Node Transparent BSDF
+    transparent_bsdf = eft_puddle_1.nodes.new("ShaderNodeBsdfTransparent")
+    transparent_bsdf.name = "Transparent BSDF"
+    transparent_bsdf.show_options = True
+    # Color
+    transparent_bsdf.inputs[0].default_value = (1.0, 1.0, 1.0, 1.0)
+
+    # Node Fresnel
+    fresnel = eft_puddle_1.nodes.new("ShaderNodeFresnel")
+    fresnel.name = "Fresnel"
+    fresnel.show_options = True
+    # IOR
+    fresnel.inputs[0].default_value = 1.3300000429153442
+    # Normal
+    fresnel.inputs[1].default_value = (0.0, 0.0, 0.0)
+
+    # Node Group Output
+    group_output = eft_puddle_1.nodes.new("NodeGroupOutput")
+    group_output.name = "Group Output"
+    group_output.show_options = True
+    group_output.is_active_output = True
+
+    # Node Group Input
+    group_input = eft_puddle_1.nodes.new("NodeGroupInput")
+    group_input.name = "Group Input"
+    group_input.show_options = True
+
+    # Set locations
+    eft_puddle_1.nodes["Principled BSDF"].location = (-159.414794921875, -39.111572265625)
+    eft_puddle_1.nodes["Mix Shader"].location = (143.085205078125, 84.22176361083984)
+    eft_puddle_1.nodes["Transparent BSDF"].location = (-109.414794921875, 84.22177124023438)
+    eft_puddle_1.nodes["Fresnel"].location = (-109.414794921875, 227.5550994873047)
+    eft_puddle_1.nodes["Group Output"].location = (333.085205078125, 84.22176361083984)
+    eft_puddle_1.nodes["Group Input"].location = (-349.414794921875, -92.1693115234375)
+
+    # Set dimensions
+    eft_puddle_1.nodes["Principled BSDF"].width  = 240.0
+    eft_puddle_1.nodes["Principled BSDF"].height = 100.0
+
+    eft_puddle_1.nodes["Mix Shader"].width  = 140.0
+    eft_puddle_1.nodes["Mix Shader"].height = 100.0
+
+    eft_puddle_1.nodes["Transparent BSDF"].width  = 140.0
+    eft_puddle_1.nodes["Transparent BSDF"].height = 100.0
+
+    eft_puddle_1.nodes["Fresnel"].width  = 140.0
+    eft_puddle_1.nodes["Fresnel"].height = 100.0
+
+    eft_puddle_1.nodes["Group Output"].width  = 140.0
+    eft_puddle_1.nodes["Group Output"].height = 100.0
+
+    eft_puddle_1.nodes["Group Input"].width  = 140.0
+    eft_puddle_1.nodes["Group Input"].height = 100.0
+
+
+    # Initialize eft_puddle_1 links
+
+    # fresnel.Factor -> mix_shader.Factor
+    eft_puddle_1.links.new(
+        eft_puddle_1.nodes["Fresnel"].outputs[0],
+        eft_puddle_1.nodes["Mix Shader"].inputs[0]
+    )
+    # principled_bsdf.BSDF -> mix_shader.Shader
+    eft_puddle_1.links.new(
+        eft_puddle_1.nodes["Principled BSDF"].outputs[0],
+        eft_puddle_1.nodes["Mix Shader"].inputs[2]
+    )
+    # transparent_bsdf.BSDF -> mix_shader.Shader
+    eft_puddle_1.links.new(
+        eft_puddle_1.nodes["Transparent BSDF"].outputs[0],
+        eft_puddle_1.nodes["Mix Shader"].inputs[1]
+    )
+    # group_input.Alpha -> principled_bsdf.Alpha
+    eft_puddle_1.links.new(
+        eft_puddle_1.nodes["Group Input"].outputs[1],
+        eft_puddle_1.nodes["Principled BSDF"].inputs[4]
+    )
+    # group_input.Color -> principled_bsdf.Base Color
+    eft_puddle_1.links.new(
+        eft_puddle_1.nodes["Group Input"].outputs[0],
+        eft_puddle_1.nodes["Principled BSDF"].inputs[0]
+    )
+    # mix_shader.Shader -> group_output.Shader
+    eft_puddle_1.links.new(
+        eft_puddle_1.nodes["Mix Shader"].outputs[0],
+        eft_puddle_1.nodes["Group Output"].inputs[0]
+    )
+
+    return eft_puddle_1
+

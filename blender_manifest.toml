@@ -5,17 +5,17 @@ schema_version = "1.0.0"
 id = "tark_to_blend"
 version = "1.0.0"
 name = "Tark To Blend"
-tagline = "Scene cleanup and material setup for Escape from Tarkov levels imported with Assetstudio."
+tagline = "Scene cleanup and material setup for Escape from Tarkov levels imported with Assetstudio"
 maintainer = "Soyuz Kerman"
 # Supported types: "add-on", "theme"
 type = "add-on"
 
 # Optional link to documentation, support, source files, etc
-# website = "https://extensions.blender.org/add-ons/my-example-package/"
+website = "https://github.com/SoyuzKerman/Tark-to-Blend"
 
 # Optional list defined by Blender and server, see:
 # https://docs.blender.org/manual/en/dev/advanced/extensions/tags.html
-tags = ["Animation", "Sequencer"]
+tags = ["3D View", "Game Engine", "Material"]
 
 blender_version_min = "4.2.0"
 # # Optional: Blender version that the extension does not support, earlier versions are supported.
