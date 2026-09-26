@@ -24,7 +24,7 @@ def start(Cleanup_Toggle) :
                     
                 print(obj.name)
 
-        print(Empty_List)
+        #print(Empty_List)
 
         # Clear parents
         bpy.ops.object.select_all(action = "SELECT")
