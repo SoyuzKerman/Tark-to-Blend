@@ -29,18 +29,18 @@ Visit [soyuzkerman.net](https://soyuzkerman.net/) for more information on the pr
 
 1. Select a map of interested in the [Map List](https://github.com/SoyuzKerman/Tark-to-Blend/blob/main/map_list.csv). As an example, we will choose the Ragman scene contained in the **level643**.
 2. Load the **level** file in AssetStudio :
-   1. File > Load file, then go to the game folders and select the file : Escape from Tarkov > EscapeFromTarkov_Data > level643
-   2. Wait for a few minutes for the assets to load.
-   3. In *Scene Hierarchy*, tick the box next to the **level** file :
-   4. Click Model > Export selected objects (merge)
+   - File > Load file, then go to the game folders and select the file : Escape from Tarkov > EscapeFromTarkov_Data > level643
+   - Wait for a few minutes for the assets to load.
+   - In *Scene Hierarchy*, tick the box next to the **level** file :
+   - Click Model > Export selected objects (merge)
 <img width="549" height="477" alt="image" src="https://github.com/user-attachments/assets/2513a6b7-4bc3-434b-8085-73c56f8e3718" />
 
-   5. Choose a folder to save the scene as a FBX file. I like to rename the file with the name of the level to remember where it comes from.
-   6. The output folder opens automatically once the process is over. It should contain a FBX file (containing geometry and material data) and PNG texture files.
+   - Choose a folder to save the scene as a FBX file. I like to rename the file with the name of the level to remember where it comes from.
+    The output folder opens automatically once the process is over. It should contain a FBX file (containing geometry and material data) and PNG texture files.
 
 <img width="613" height="387" alt="image" src="https://github.com/user-attachments/assets/59c8a0d5-5178-4cf7-bb66-a600f151b113" />
 
-   8. I prefer to keep the textures in a separate "textures" folder.
+   - I prefer to keep the textures in a separate "textures" folder.
 
 NOTE : The normal map textures are red. This is normal and the material setup takes it into account.
 
@@ -57,12 +57,12 @@ The actual scene is hidden between objects that will be deleted by add-on. If we
   <img width="252" height="253" alt="image" src="https://github.com/user-attachments/assets/97197bff-c7d4-4ee3-97ae-83c695efa509" />
 
 5. To use the panel :
-    1. *Clean scene* will remove all empties. **This is recommended for maps, but not characters** as it will break some animations (more precisely, the item animations).
-    2. *Save CSV* will create a CSV file with all material properties in your "textures" folder. **This is intended for debug and you do not need to use it**.
-    3. Click on the folder icon to indicate the path to your "texture" folder. This is where the program will search for missing textures. **This is mandatory**.
-    4. Before starting the program, you can toggle the Blender console in Window > Toggle system console.
-    5. Click *Start process* to start the automatic cleanup and material setup. **Do not click anything in the Blender interface until the *Start process* button turned to gray again**. You can follow the progress in the console if you activated it.
-    6. During the process, the scene is scaled from 0.01 to 1. Look around to find it if it moved. The scene should now look like this :
+    - *Clean scene* will remove all empties. **This is recommended for maps, but not characters** as it will break some animations (more precisely, the item animations).
+    - *Save CSV* will create a CSV file with all material properties in your "textures" folder. **This is intended for debug and you do not need to use it**.
+    - Click on the folder icon to indicate the path to your "texture" folder. This is where the program will search for missing textures. **This is mandatory**.
+    - Before starting the program, you can toggle the Blender console in Window > Toggle system console.
+    - Click *Start process* to start the automatic cleanup and material setup. **Do not click anything in the Blender interface until the *Start process* button turned to gray again**. You can follow the progress in the console if you activated it.
+    - During the process, the scene is scaled from 0.01 to 1. Look around to find it if it moved. The scene should now look like this :
 <img width="1023" height="576" alt="image" src="https://github.com/user-attachments/assets/5eae6a2b-f44b-4830-8123-10c03160fddb" />
 
 ### Manual Cleanup
