@@ -74,7 +74,7 @@ def Node_Tree_Mapping(Nodes) :
     return D_Texture, N_Texture, Has_Diffuse, Has_Normal
 
 
-def Is_Shader_Transparent(Mat, Nodes, Has_Diffuse, Has_Normal, D_Texture, Atlas_Exceptions, TRANSPARENT_NAMES) :
+def Is_Shader_Transparent(Mat, Nodes, Has_Diffuse, Has_Normal, D_Texture, ATLAS_EXCEPTIONS, TRANSPARENT_NAMES) :
     # Detects if the material is transparent
     # WARNING : based on my observations about the material setup and texture names.
     # It is impossible to flawlessly detect if a material must be transparent
@@ -105,7 +105,7 @@ def Is_Shader_Transparent(Mat, Nodes, Has_Diffuse, Has_Normal, D_Texture, Atlas_
 
         if Has_Normal : 
             if any(x in Img_Name for x in ["atlas","Atlas"]) :
-                if Img_Name in Atlas_Exceptions :
+                if Img_Name in ATLAS_EXCEPTIONS :
                     return False
                 else :
                     return True

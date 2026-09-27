@@ -55,8 +55,6 @@ class UI_Panel(bpy.types.Panel) :
         layout = self.layout
         scene = context.scene
         panel = scene.Custom_Panel
-
-        
         
         box0 = self.layout.box()
         
@@ -87,8 +85,8 @@ class UI_Panel(bpy.types.Panel) :
         warningrow = box2.row()
         warningrow.alert = True
         warningrow.label(text="Blender may freeze. Do not touch", icon="FREEZE")
-        # form
-       
+
+
 class OT_Main(bpy.types.Operator) :
     bl_idname = "ttb.main" # having "." in the name is mandatory
     bl_label = "Main Operator"
@@ -124,7 +122,7 @@ class OT_Main(bpy.types.Operator) :
         Time_Final_s = round(time.time()-Time_0,6)
         print(f"Execution time : {Time_Final_s} s")
 
-        return {'FINISHED'} 
+        return {'FINISHED'} # is mandatory
 
 
 Class_List = [OT_Main, UI_Settings, UI_Panel]
