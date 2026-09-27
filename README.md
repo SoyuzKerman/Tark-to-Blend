@@ -3,7 +3,7 @@ A Blender add-on to easily import Escape from Tarkov scenes with Assetstudio.
 
 If you need help, send an email at [contact@soyuzkerman.net](mailto:contact@soyuzkerman.net).
 
-Visit [soyuzkerman.net](https://soyuzkerman.net/) for more information on the program and the material setup.
+Visit [soyuzkerman.net](https://soyuzkerman.net/article/tarkov-maps/0-0-introduction/) for more information on the program and the material setup.
 
 Check my [Open3DLab profile](https://open3dlab.com/user/254875/) to see the stuff I already ported to Blender.
 
