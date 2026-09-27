@@ -27,7 +27,7 @@ Visit [soyuzkerman.net](https://soyuzkerman.net/) for more information on the pr
 
 ### Getting level files
 
-1. Select a map of interest in the [Map List](https://github.com/SoyuzKerman/Tark-to-Blend/blob/main/map_list.csv). As an example, we will choose the Ragman scene contained in the **level643** file.
+1. Select a map of interest in the [Map List](https://github.com/SoyuzKerman/Tark-to-Blend/blob/main/map_list.csv). This map list was built based on [DrakiaXYZ's Map Info Extractor](https://github.com/DrakiaXYZ/SPT-MapInfoExtractor/). As an example, we will choose the Ragman scene contained in the **level643** file.
 2. Load the **level** file in AssetStudio :
    - File > Load file, then go to the game folders and select the file : Escape from Tarkov > EscapeFromTarkov_Data > level643
    - Wait for a few minutes for the assets to load.
