@@ -5,6 +5,8 @@ If you need help, send an email at [contact@soyuzkerman.net](mailto:contact@soyu
 
 Visit [soyuzkerman.net](https://soyuzkerman.net/) for more information on the program and the material setup.
 
+Check my [Open3DLab profile](https://open3dlab.com/user/254875/) to see the stuff I already ported to Blender.
+
 ## Requirements
 - The game _Escape from Tarkov_ downloaded on your PC.
 - Assetstudio. The original version is not maintained. I recommend [aelurum's fork](https://github.com/aelurum/AssetStudioMod) or [Razviar's fork](https://github.com/Razviar/assetstudio). Razviar's version has a mapping function that is useful for exporting characters.
