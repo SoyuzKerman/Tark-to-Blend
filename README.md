@@ -82,18 +82,22 @@ The actual scene is hidden behind objects that will be deleted by the add-on. If
 
 <img width="622" height="422" alt="masking" src="https://github.com/user-attachments/assets/84fc4af4-1e14-4e3d-ab74-7dfc9a86643c" />
 
-4. Check for **materials that should be transparent but are opaque**. In this example scene the GP7 gas mask does not have transparent glass. In this case go to the glass material and change the central node from "EFT_Shader_DGN" to "EFT_Shader_Hair".
+4. Remove [detail maps](https://docs.unity3d.com/560/Documentation/Manual/StandardShaderMaterialParameterDetail.html) leftovers. These are normal maps without diffuse textures. I am searching for a way to use them (see this [BlenderArtists thread](https://blenderartists.org/t/detail-maps-how-to-apply-a-second-normal-map/1653265)), but for now I just plug a `Transparent BSDF` and forget about them.
+
+<img width="778" height="592" alt="14_detailmap" src="https://github.com/user-attachments/assets/b8f27174-17d9-4e1c-a266-99312dfd6a03" />
+
+5. Check for **materials that should be transparent but are opaque**. In this example scene the GP7 gas mask does not have transparent glass. In this case go to the glass material and change the central node from "EFT_Shader_DGN" to "EFT_Shader_Hair".
 <img width="1705" height="886" alt="image" src="https://github.com/user-attachments/assets/8127991d-1a1b-41c5-80f9-27d10e3c074a" />
 
 NOTE : There is no way to detect which material is transparent and which is not, it's basically hardcoded in the [tarkdata.py](https://github.com/SoyuzKerman/Tark-to-Blend/blob/main/tarkdata.py) file. I added every texture name I could find in the trader scenes, but you can also add yours in the **TRANSPARENT_NAMES** list if needed.
 
-5. Do the same for **emissive** materials, for the same reasons.
+6. Do the same for **emissive** materials, for the same reasons.
 
-6. Some materials, which should be colored, appear white. These materials are visible in **Solid** shading view with the Color > Object > Material option. To fix this, select the material in the *Material* panel, and go to **Viewport display > Color**. Click on the color and copy its *hex* code. Then go to the shader editor and add a **Color > Multiply** node between the top texture and the "EFT_Shader_DGN" node. Click on the bottom color of the Multiply node and paste the *hex* code to apply the color to the texture.
+7. Some materials, which should be colored, appear white. These materials are visible in **Solid** shading view with the Color > Object > Material option. To fix this, select the material in the *Material* panel, and go to **Viewport display > Color**. Click on the color and copy its *hex* code. Then go to the shader editor and add a **Color > Multiply** node between the top texture and the "EFT_Shader_DGN" node. Click on the bottom color of the Multiply node and paste the *hex* code to apply the color to the texture.
 
 <img width="1702" height="856" alt="image" src="https://github.com/user-attachments/assets/8bba5cbf-6152-4427-bc91-bb15c3bbdaf4" />
 
-7. Add the lights to the scene. The EFT lights are quite saturated, so using the **Blackbody** colors is not necessarily the closest to the game lighting. I also like to add a cube with a **Volume scatter** to make the light rays visible.
+8. Add the lights to the scene. The EFT lights are quite saturated, so using the **Blackbody** colors is not necessarily the closest to the game lighting. I also like to add a cube with a **Volume scatter** to make the light rays visible.
 
 ### Result
 
