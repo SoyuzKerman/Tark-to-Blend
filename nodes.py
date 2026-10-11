@@ -1247,8 +1247,9 @@ def NG_Shader_Hair(node_name = "EFT_Shader_Hair"):
 
     return eft_shader_hair_1
 
-
-def NG_Shader_Puddle(node_name = "EFT_Puddle"):
+# Shader for puddles
+# There are enough puddles to be worth it to automate the process
+def NG_Shader_Puddle(node_name = "EFT_Puddle") :
     """Initialize EFT_Puddle node group"""
     eft_puddle_1 = bpy.data.node_groups.new(type = 'ShaderNodeTree', name = node_name)
 
@@ -1257,28 +1258,28 @@ def NG_Shader_Puddle(node_name = "EFT_Puddle"):
     eft_puddle_1.default_group_node_width = 140
     # eft_puddle_1 interface
 
-    # Socket Shader
-    shader_socket = eft_puddle_1.interface.new_socket(name="BSDF", in_out='OUTPUT', socket_type='NodeSocketShader')
-    shader_socket.attribute_domain = 'POINT'
-    shader_socket.default_input = 'VALUE'
-    shader_socket.structure_type = 'AUTO'
+    # Socket BSDF
+    bsdf_socket = eft_puddle_1.interface.new_socket(name="BSDF", in_out='OUTPUT', socket_type='NodeSocketShader')
+    bsdf_socket.attribute_domain = 'POINT'
+    bsdf_socket.default_input = 'VALUE'
+    bsdf_socket.structure_type = 'AUTO'
 
-    # Socket Color
-    color_socket = eft_puddle_1.interface.new_socket(name="D", in_out='INPUT', socket_type='NodeSocketColor')
-    color_socket.default_value = (0.800000011920929, 0.800000011920929, 0.800000011920929, 1.0)
-    color_socket.attribute_domain = 'POINT'
-    color_socket.default_input = 'VALUE'
-    color_socket.structure_type = 'AUTO'
+    # Socket D
+    d_socket = eft_puddle_1.interface.new_socket(name="D", in_out='INPUT', socket_type='NodeSocketColor')
+    d_socket.default_value = (0.800000011920929, 0.800000011920929, 0.800000011920929, 1.0)
+    d_socket.attribute_domain = 'POINT'
+    d_socket.default_input = 'VALUE'
+    d_socket.structure_type = 'AUTO'
 
-    # Socket Alpha
-    alpha_socket = eft_puddle_1.interface.new_socket(name="D alpha", in_out='INPUT', socket_type='NodeSocketFloat')
-    alpha_socket.default_value = 0.0
-    alpha_socket.min_value = -3.4028234663852886e+38
-    alpha_socket.max_value = 3.4028234663852886e+38
-    alpha_socket.subtype = 'NONE'
-    alpha_socket.attribute_domain = 'POINT'
-    alpha_socket.default_input = 'VALUE'
-    alpha_socket.structure_type = 'AUTO'
+    # Socket D alpha
+    d_alpha_socket = eft_puddle_1.interface.new_socket(name="D alpha", in_out='INPUT', socket_type='NodeSocketFloat')
+    d_alpha_socket.default_value = 0.0
+    d_alpha_socket.min_value = -3.4028234663852886e+38
+    d_alpha_socket.max_value = 3.4028234663852886e+38
+    d_alpha_socket.subtype = 'NONE'
+    d_alpha_socket.attribute_domain = 'POINT'
+    d_alpha_socket.default_input = 'VALUE'
+    d_alpha_socket.structure_type = 'AUTO'
 
     # Initialize eft_puddle_1 nodes
 
@@ -1374,24 +1375,55 @@ def NG_Shader_Puddle(node_name = "EFT_Puddle"):
     # Normal
     fresnel.inputs[1].default_value = (0.0, 0.0, 0.0)
 
+    # Node Group Input
+    group_input = eft_puddle_1.nodes.new("NodeGroupInput")
+    group_input.name = "Group Input"
+    group_input.show_options = True
+
     # Node Group Output
     group_output = eft_puddle_1.nodes.new("NodeGroupOutput")
     group_output.name = "Group Output"
     group_output.show_options = True
     group_output.is_active_output = True
 
-    # Node Group Input
-    group_input = eft_puddle_1.nodes.new("NodeGroupInput")
-    group_input.name = "Group Input"
-    group_input.show_options = True
+    # Node Map Range
+    map_range = eft_puddle_1.nodes.new("ShaderNodeMapRange")
+    map_range.name = "Map Range"
+    map_range.show_options = True
+    map_range.clamp = True
+    map_range.data_type = 'FLOAT'
+    map_range.interpolation_type = 'LINEAR'
+    # From Min
+    map_range.inputs[1].default_value = 0.0024999999441206455
+    # From Max
+    map_range.inputs[2].default_value = 0.1000000610947609
+    # To Min
+    map_range.inputs[3].default_value = 0.0
+    # To Max
+    map_range.inputs[4].default_value = 1.0
 
+    # Node Math
+    math = eft_puddle_1.nodes.new("ShaderNodeMath")
+    math.name = "Math"
+    math.show_options = True
+    math.operation = 'MULTIPLY'
+    math.use_clamp = True
+
+    # Node Reroute
+    reroute = eft_puddle_1.nodes.new("NodeReroute")
+    reroute.name = "Reroute"
+    reroute.show_options = True
+    reroute.socket_idname = "NodeSocketShader"
     # Set locations
-    eft_puddle_1.nodes["Principled BSDF"].location = (-159.414794921875, -39.111572265625)
-    eft_puddle_1.nodes["Mix Shader"].location = (143.085205078125, 84.22176361083984)
-    eft_puddle_1.nodes["Transparent BSDF"].location = (-109.414794921875, 84.22177124023438)
-    eft_puddle_1.nodes["Fresnel"].location = (-109.414794921875, 227.5550994873047)
-    eft_puddle_1.nodes["Group Output"].location = (333.085205078125, 84.22176361083984)
-    eft_puddle_1.nodes["Group Input"].location = (-349.414794921875, -92.1693115234375)
+    eft_puddle_1.nodes["Principled BSDF"].location = (-236.44915771484375, -115.07192993164062)
+    eft_puddle_1.nodes["Mix Shader"].location = (268.55084228515625, 46.08827209472656)
+    eft_puddle_1.nodes["Transparent BSDF"].location = (66.05084228515625, 46.0882568359375)
+    eft_puddle_1.nodes["Fresnel"].location = (-186.44915771484375, 98.42160034179688)
+    eft_puddle_1.nodes["Group Input"].location = (-463.94915771484375, 23.426712036132812)
+    eft_puddle_1.nodes["Group Output"].location = (458.55084228515625, 46.08827209472656)
+    eft_puddle_1.nodes["Map Range"].location = (-186.44915771484375, 379.0882873535156)
+    eft_puddle_1.nodes["Math"].location = (66.05084228515625, 238.75494384765625)
+    eft_puddle_1.nodes["Reroute"].location = (206.05084228515625, -147.41819763183594)
 
     # Set dimensions
     eft_puddle_1.nodes["Principled BSDF"].width  = 240.0
@@ -1406,45 +1438,341 @@ def NG_Shader_Puddle(node_name = "EFT_Puddle"):
     eft_puddle_1.nodes["Fresnel"].width  = 140.0
     eft_puddle_1.nodes["Fresnel"].height = 100.0
 
+    eft_puddle_1.nodes["Group Input"].width  = 140.0
+    eft_puddle_1.nodes["Group Input"].height = 100.0
+
     eft_puddle_1.nodes["Group Output"].width  = 140.0
     eft_puddle_1.nodes["Group Output"].height = 100.0
 
-    eft_puddle_1.nodes["Group Input"].width  = 140.0
-    eft_puddle_1.nodes["Group Input"].height = 100.0
+    eft_puddle_1.nodes["Map Range"].width  = 140.0
+    eft_puddle_1.nodes["Map Range"].height = 100.0
+
+    eft_puddle_1.nodes["Math"].width  = 140.0
+    eft_puddle_1.nodes["Math"].height = 100.0
+
+    eft_puddle_1.nodes["Reroute"].width  = 14.5
+    eft_puddle_1.nodes["Reroute"].height = 100.0
 
 
     # Initialize eft_puddle_1 links
 
-    # fresnel.Factor -> mix_shader.Factor
+    # group_input.D alpha -> principled_bsdf.Alpha
+    eft_puddle_1.links.new(
+        eft_puddle_1.nodes["Group Input"].outputs[1],
+        eft_puddle_1.nodes["Principled BSDF"].inputs[4]
+    )
+    # group_input.D -> principled_bsdf.Base Color
+    eft_puddle_1.links.new(
+        eft_puddle_1.nodes["Group Input"].outputs[0],
+        eft_puddle_1.nodes["Principled BSDF"].inputs[0]
+    )
+    # mix_shader.Shader -> group_output.BSDF
+    eft_puddle_1.links.new(
+        eft_puddle_1.nodes["Mix Shader"].outputs[0],
+        eft_puddle_1.nodes["Group Output"].inputs[0]
+    )
+    # fresnel.Factor -> math.Value
     eft_puddle_1.links.new(
         eft_puddle_1.nodes["Fresnel"].outputs[0],
-        eft_puddle_1.nodes["Mix Shader"].inputs[0]
+        eft_puddle_1.nodes["Math"].inputs[1]
     )
-    # principled_bsdf.BSDF -> mix_shader.Shader
+    # map_range.Result -> math.Value
     eft_puddle_1.links.new(
-        eft_puddle_1.nodes["Principled BSDF"].outputs[0],
-        eft_puddle_1.nodes["Mix Shader"].inputs[2]
+        eft_puddle_1.nodes["Map Range"].outputs[0],
+        eft_puddle_1.nodes["Math"].inputs[0]
+    )
+    # math.Value -> mix_shader.Factor
+    eft_puddle_1.links.new(
+        eft_puddle_1.nodes["Math"].outputs[0],
+        eft_puddle_1.nodes["Mix Shader"].inputs[0]
     )
     # transparent_bsdf.BSDF -> mix_shader.Shader
     eft_puddle_1.links.new(
         eft_puddle_1.nodes["Transparent BSDF"].outputs[0],
         eft_puddle_1.nodes["Mix Shader"].inputs[1]
     )
-    # group_input.Alpha -> principled_bsdf.Alpha
-    eft_puddle_1.links.new(
-        eft_puddle_1.nodes["Group Input"].outputs[1],
-        eft_puddle_1.nodes["Principled BSDF"].inputs[4]
-    )
-    # group_input.Color -> principled_bsdf.Base Color
+    # group_input.D -> map_range.Value
     eft_puddle_1.links.new(
         eft_puddle_1.nodes["Group Input"].outputs[0],
-        eft_puddle_1.nodes["Principled BSDF"].inputs[0]
+        eft_puddle_1.nodes["Map Range"].inputs[0]
     )
-    # mix_shader.Shader -> group_output.Shader
+    # principled_bsdf.BSDF -> reroute.Input
     eft_puddle_1.links.new(
-        eft_puddle_1.nodes["Mix Shader"].outputs[0],
-        eft_puddle_1.nodes["Group Output"].inputs[0]
+        eft_puddle_1.nodes["Principled BSDF"].outputs[0],
+        eft_puddle_1.nodes["Reroute"].inputs[0]
+    )
+    # reroute.Output -> mix_shader.Shader
+    eft_puddle_1.links.new(
+        eft_puddle_1.nodes["Reroute"].outputs[0],
+        eft_puddle_1.nodes["Mix Shader"].inputs[2]
     )
 
     return eft_puddle_1
 
+# Mask calculation for Vertex Paint materials
+def NG_Shader_VP(node_name = "EFT_VP_Mask"):
+    """Initialize EFT_VP_Mask node group"""
+    eft_vp_mask_1 = bpy.data.node_groups.new(type = 'ShaderNodeTree', name = node_name)
+
+    eft_vp_mask_1.color_tag = 'NONE'
+    eft_vp_mask_1.description = ""
+    eft_vp_mask_1.default_group_node_width = 140
+    # eft_vp_mask_1 interface
+
+    # Socket Mask layers 1-2
+    mask_layers_1_2_socket = eft_vp_mask_1.interface.new_socket(name="Mask layers 1-2", in_out='OUTPUT', socket_type='NodeSocketFloat')
+    mask_layers_1_2_socket.default_value = 0.0
+    mask_layers_1_2_socket.min_value = -3.4028234663852886e+38
+    mask_layers_1_2_socket.max_value = 3.4028234663852886e+38
+    mask_layers_1_2_socket.subtype = 'NONE'
+    mask_layers_1_2_socket.attribute_domain = 'POINT'
+    mask_layers_1_2_socket.default_input = 'VALUE'
+    mask_layers_1_2_socket.structure_type = 'AUTO'
+
+    # Socket Mask layers (1-2) - 3
+    mask_layers__1_2____3_socket = eft_vp_mask_1.interface.new_socket(name="Mask layers (1-2) - 3", in_out='OUTPUT', socket_type='NodeSocketFloat')
+    mask_layers__1_2____3_socket.default_value = 0.0
+    mask_layers__1_2____3_socket.min_value = -3.4028234663852886e+38
+    mask_layers__1_2____3_socket.max_value = 3.4028234663852886e+38
+    mask_layers__1_2____3_socket.subtype = 'NONE'
+    mask_layers__1_2____3_socket.attribute_domain = 'POINT'
+    mask_layers__1_2____3_socket.default_input = 'VALUE'
+    mask_layers__1_2____3_socket.structure_type = 'AUTO'
+
+    # Socket MASK
+    mask_socket = eft_vp_mask_1.interface.new_socket(name="MASK", in_out='INPUT', socket_type='NodeSocketColor')
+    mask_socket.default_value = (0.0, 0.0, 0.0, 1.0)
+    mask_socket.attribute_domain = 'POINT'
+    mask_socket.default_input = 'VALUE'
+    mask_socket.structure_type = 'AUTO'
+
+    # Socket Color Attribute
+    color_attribute_socket = eft_vp_mask_1.interface.new_socket(name="Color Attribute", in_out='INPUT', socket_type='NodeSocketColor')
+    color_attribute_socket.default_value = (0.800000011920929, 0.800000011920929, 0.800000011920929, 1.0)
+    color_attribute_socket.attribute_domain = 'POINT'
+    color_attribute_socket.default_input = 'VALUE'
+    color_attribute_socket.structure_type = 'AUTO'
+
+    # Initialize eft_vp_mask_1 nodes
+
+    # Node Separate Color.001
+    separate_color_001 = eft_vp_mask_1.nodes.new("ShaderNodeSeparateColor")
+    separate_color_001.name = "Separate Color.001"
+    separate_color_001.show_options = True
+    separate_color_001.mode = 'RGB'
+
+    # Node Math
+    math = eft_vp_mask_1.nodes.new("ShaderNodeMath")
+    math.name = "Math"
+    math.show_options = True
+    math.operation = 'MULTIPLY'
+    math.use_clamp = False
+
+    # Node Math.001
+    math_001 = eft_vp_mask_1.nodes.new("ShaderNodeMath")
+    math_001.name = "Math.001"
+    math_001.show_options = True
+    math_001.operation = 'MULTIPLY'
+    math_001.use_clamp = False
+
+    # Node Math.002
+    math_002 = eft_vp_mask_1.nodes.new("ShaderNodeMath")
+    math_002.name = "Math.002"
+    math_002.show_options = True
+    math_002.operation = 'MULTIPLY'
+    math_002.use_clamp = False
+
+    # Node Math.003
+    math_003 = eft_vp_mask_1.nodes.new("ShaderNodeMath")
+    math_003.name = "Math.003"
+    math_003.show_options = True
+    math_003.operation = 'GREATER_THAN'
+    math_003.use_clamp = False
+
+    # Node Math.004
+    math_004 = eft_vp_mask_1.nodes.new("ShaderNodeMath")
+    math_004.name = "Math.004"
+    math_004.show_options = True
+    math_004.operation = 'GREATER_THAN'
+    math_004.use_clamp = False
+
+    # Node Math.005
+    math_005 = eft_vp_mask_1.nodes.new("ShaderNodeMath")
+    math_005.name = "Math.005"
+    math_005.show_options = True
+    math_005.operation = 'ADD'
+    math_005.use_clamp = False
+
+    # Node Group Output
+    group_output = eft_vp_mask_1.nodes.new("NodeGroupOutput")
+    group_output.name = "Group Output"
+    group_output.show_options = True
+    group_output.is_active_output = True
+
+    # Node Group Input
+    group_input = eft_vp_mask_1.nodes.new("NodeGroupInput")
+    group_input.name = "Group Input"
+    group_input.show_options = True
+
+    # Node Separate Color
+    separate_color = eft_vp_mask_1.nodes.new("ShaderNodeSeparateColor")
+    separate_color.name = "Separate Color"
+    separate_color.show_options = True
+    separate_color.mode = 'RGB'
+
+    # Node Reroute
+    reroute = eft_vp_mask_1.nodes.new("NodeReroute")
+    reroute.name = "Reroute"
+    reroute.show_options = True
+    reroute.socket_idname = "NodeSocketFloat"
+    # Node Reroute.001
+    reroute_001 = eft_vp_mask_1.nodes.new("NodeReroute")
+    reroute_001.name = "Reroute.001"
+    reroute_001.show_options = True
+    reroute_001.socket_idname = "NodeSocketFloat"
+    # Set locations
+    eft_vp_mask_1.nodes["Separate Color.001"].location = (-288.57598876953125, -61.338531494140625)
+    eft_vp_mask_1.nodes["Math"].location = (-73.57598876953125, 226.99481201171875)
+    eft_vp_mask_1.nodes["Math.001"].location = (-73.57598876953125, 34.328147888183594)
+    eft_vp_mask_1.nodes["Math.002"].location = (-73.57598876953125, -157.00518798828125)
+    eft_vp_mask_1.nodes["Math.003"].location = (128.92401123046875, -157.00518798828125)
+    eft_vp_mask_1.nodes["Math.004"].location = (318.92401123046875, 166.38201904296875)
+    eft_vp_mask_1.nodes["Math.005"].location = (128.92401123046875, 34.328147888183594)
+    eft_vp_mask_1.nodes["Group Output"].location = (521.4240112304688, 70.8905029296875)
+    eft_vp_mask_1.nodes["Group Input"].location = (-491.07598876953125, 34.328147888183594)
+    eft_vp_mask_1.nodes["Separate Color"].location = (-288.57598876953125, 130.66148376464844)
+    eft_vp_mask_1.nodes["Reroute"].location = (268.92401123046875, 193.80587768554688)
+    eft_vp_mask_1.nodes["Reroute.001"].location = (458.92401123046875, -190.24261474609375)
+
+    # Set dimensions
+    eft_vp_mask_1.nodes["Separate Color.001"].width  = 140.0
+    eft_vp_mask_1.nodes["Separate Color.001"].height = 100.0
+
+    eft_vp_mask_1.nodes["Math"].width  = 140.0
+    eft_vp_mask_1.nodes["Math"].height = 100.0
+
+    eft_vp_mask_1.nodes["Math.001"].width  = 140.0
+    eft_vp_mask_1.nodes["Math.001"].height = 100.0
+
+    eft_vp_mask_1.nodes["Math.002"].width  = 140.0
+    eft_vp_mask_1.nodes["Math.002"].height = 100.0
+
+    eft_vp_mask_1.nodes["Math.003"].width  = 140.0
+    eft_vp_mask_1.nodes["Math.003"].height = 100.0
+
+    eft_vp_mask_1.nodes["Math.004"].width  = 140.0
+    eft_vp_mask_1.nodes["Math.004"].height = 100.0
+
+    eft_vp_mask_1.nodes["Math.005"].width  = 140.0
+    eft_vp_mask_1.nodes["Math.005"].height = 100.0
+
+    eft_vp_mask_1.nodes["Group Output"].width  = 140.0
+    eft_vp_mask_1.nodes["Group Output"].height = 100.0
+
+    eft_vp_mask_1.nodes["Group Input"].width  = 140.0
+    eft_vp_mask_1.nodes["Group Input"].height = 100.0
+
+    eft_vp_mask_1.nodes["Separate Color"].width  = 140.0
+    eft_vp_mask_1.nodes["Separate Color"].height = 100.0
+
+    eft_vp_mask_1.nodes["Reroute"].width  = 14.5
+    eft_vp_mask_1.nodes["Reroute"].height = 100.0
+
+    eft_vp_mask_1.nodes["Reroute.001"].width  = 14.5
+    eft_vp_mask_1.nodes["Reroute.001"].height = 100.0
+
+
+    # Initialize eft_vp_mask_1 links
+
+    # separate_color_001.Red -> math.Value
+    eft_vp_mask_1.links.new(
+        eft_vp_mask_1.nodes["Separate Color.001"].outputs[0],
+        eft_vp_mask_1.nodes["Math"].inputs[1]
+    )
+    # separate_color_001.Green -> math_001.Value
+    eft_vp_mask_1.links.new(
+        eft_vp_mask_1.nodes["Separate Color.001"].outputs[1],
+        eft_vp_mask_1.nodes["Math.001"].inputs[1]
+    )
+    # separate_color_001.Blue -> math_002.Value
+    eft_vp_mask_1.links.new(
+        eft_vp_mask_1.nodes["Separate Color.001"].outputs[2],
+        eft_vp_mask_1.nodes["Math.002"].inputs[1]
+    )
+    # math_001.Value -> math_003.Value
+    eft_vp_mask_1.links.new(
+        eft_vp_mask_1.nodes["Math.001"].outputs[0],
+        eft_vp_mask_1.nodes["Math.003"].inputs[0]
+    )
+    # math_002.Value -> math_003.Value
+    eft_vp_mask_1.links.new(
+        eft_vp_mask_1.nodes["Math.002"].outputs[0],
+        eft_vp_mask_1.nodes["Math.003"].inputs[1]
+    )
+    # math_005.Value -> math_004.Value
+    eft_vp_mask_1.links.new(
+        eft_vp_mask_1.nodes["Math.005"].outputs[0],
+        eft_vp_mask_1.nodes["Math.004"].inputs[1]
+    )
+    # math_001.Value -> math_005.Value
+    eft_vp_mask_1.links.new(
+        eft_vp_mask_1.nodes["Math.001"].outputs[0],
+        eft_vp_mask_1.nodes["Math.005"].inputs[0]
+    )
+    # math_002.Value -> math_005.Value
+    eft_vp_mask_1.links.new(
+        eft_vp_mask_1.nodes["Math.002"].outputs[0],
+        eft_vp_mask_1.nodes["Math.005"].inputs[1]
+    )
+    # group_input.Color Attribute -> separate_color_001.Color
+    eft_vp_mask_1.links.new(
+        eft_vp_mask_1.nodes["Group Input"].outputs[1],
+        eft_vp_mask_1.nodes["Separate Color.001"].inputs[0]
+    )
+    # math_004.Value -> group_output.Mask layers (1-2) - 3
+    eft_vp_mask_1.links.new(
+        eft_vp_mask_1.nodes["Math.004"].outputs[0],
+        eft_vp_mask_1.nodes["Group Output"].inputs[1]
+    )
+    # group_input.MASK -> separate_color.Color
+    eft_vp_mask_1.links.new(
+        eft_vp_mask_1.nodes["Group Input"].outputs[0],
+        eft_vp_mask_1.nodes["Separate Color"].inputs[0]
+    )
+    # separate_color.Green -> math_001.Value
+    eft_vp_mask_1.links.new(
+        eft_vp_mask_1.nodes["Separate Color"].outputs[1],
+        eft_vp_mask_1.nodes["Math.001"].inputs[0]
+    )
+    # separate_color.Blue -> math_002.Value
+    eft_vp_mask_1.links.new(
+        eft_vp_mask_1.nodes["Separate Color"].outputs[2],
+        eft_vp_mask_1.nodes["Math.002"].inputs[0]
+    )
+    # separate_color.Red -> math.Value
+    eft_vp_mask_1.links.new(
+        eft_vp_mask_1.nodes["Separate Color"].outputs[0],
+        eft_vp_mask_1.nodes["Math"].inputs[0]
+    )
+    # math.Value -> reroute.Input
+    eft_vp_mask_1.links.new(
+        eft_vp_mask_1.nodes["Math"].outputs[0],
+        eft_vp_mask_1.nodes["Reroute"].inputs[0]
+    )
+    # math_003.Value -> reroute_001.Input
+    eft_vp_mask_1.links.new(
+        eft_vp_mask_1.nodes["Math.003"].outputs[0],
+        eft_vp_mask_1.nodes["Reroute.001"].inputs[0]
+    )
+    # reroute.Output -> math_004.Value
+    eft_vp_mask_1.links.new(
+        eft_vp_mask_1.nodes["Reroute"].outputs[0],
+        eft_vp_mask_1.nodes["Math.004"].inputs[0]
+    )
+    # reroute_001.Output -> group_output.Mask layers 1-2
+    eft_vp_mask_1.links.new(
+        eft_vp_mask_1.nodes["Reroute.001"].outputs[0],
+        eft_vp_mask_1.nodes["Group Output"].inputs[0]
+    )
+
+    return eft_vp_mask_1

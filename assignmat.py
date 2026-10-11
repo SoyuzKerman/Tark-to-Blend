@@ -253,7 +253,7 @@ def Find_G_Texture(Nodes, Has_Diffuse, Has_Normal, D_Texture, N_Texture, Is_DGN,
 def Build_Material_Setup(Mat, Nodes, Links, Has_Diffuse, Has_Normal, Has_Glossy, Is_Transparent,
                         Has_Emissive, D_Texture, N_Texture, G_Texture, E_Texture,
                         NG_EFT_Opaque, NG_EFT_Transparent, NG_EFT_Emissive, NG_EFT_Normal,
-                        NG_EFT_Puddle, NODE_DELETE_LIST) :
+                        NG_EFT_Puddle, NG_EFT_VP, NODE_DELETE_LIST) :
     # Adds nodes to the material node tree and connects them.
     # Nodes : Mat.node_tree.nodes
     # Links : Mat.node_tree.links
@@ -263,10 +263,110 @@ def Build_Material_Setup(Mat, Nodes, Links, Has_Diffuse, Has_Normal, Has_Glossy,
     # NODE_DELETE_LIST: list of str
 
     Mat.surface_render_method = "BLENDED"
+    # Looks better.
 
     if not Has_Diffuse :
-        # The texture is broken/incomplete, use a bright red BSDF
-        Nodes["Principled BSDF"].inputs["Base Color"].default_value = (1.0, 0.0, 0.0, 1)
+        #if "_VP" in Mat.name :
+        if any(x in Mat.name for x in ["_VP", "_Vertex_Paint","_blend"]) :
+        # Setup for Vertex Painting materials
+        # Just add the MASK and TEXTURES afterwards
+            
+            Mat.diffuse_color = (0.0, 0.0, 1.0, 1)
+            
+
+            Nodes.remove(Nodes["Principled BSDF"])
+            Output_XY = Nodes["Material Output"].location
+            
+            Mix_12 = Nodes.new("ShaderNodeMixShader")
+            Mix_12.location.x = Output_XY.x - 400
+            
+            Mix_123 = Nodes.new("ShaderNodeMixShader")
+            Mix_123.location.x = Output_XY.x - 200
+            
+            Links.new(Mix_12.outputs["Shader"], Mix_123.inputs["Shader"])
+            Links.new(Mix_123.outputs["Shader"], Nodes["Material Output"].inputs["Surface"])
+
+            # Materials are indexed by their corresponding color
+            # in vertex painting mode
+
+            # BLUE material
+            
+            Frame_Blue = Nodes.new("NodeFrame")
+            Frame_Blue.label = "BLUE"
+            
+            NG_Blue = Instantiate_Group(Nodes, NG_EFT_Opaque)
+            NG_Blue.location.x = Output_XY.x - 800
+            NG_Blue.location.y = Output_XY.y - 200
+            NG_Blue.parent = Frame_Blue
+            NG_Blue.inputs["D"].default_value = (0.0, 0.0, 1.0, 1)
+            
+            NG_Blue_N = Instantiate_Group(Nodes, NG_EFT_Normal)
+            NG_Blue_N.location.x = Output_XY.x - 1000
+            NG_Blue_N.location.y = Output_XY.y - 400
+            NG_Blue_N.parent = Frame_Blue
+            
+            Links.new(NG_Blue.inputs["N Converted"], NG_Blue_N.outputs["Fixed Normal"])
+            Links.new(NG_Blue.outputs["BSDF"], Mix_12.inputs["Shader"])
+
+            # GREEN material
+
+            Frame_Green = Nodes.new("NodeFrame")
+            Frame_Green.label = "GREEN"
+            
+            NG_Green = Instantiate_Group(Nodes, NG_EFT_Opaque)
+            NG_Green.location.x = Output_XY.x - 800
+            NG_Green.location.y = Output_XY.y - 700
+            NG_Green.parent = Frame_Green
+            NG_Green.inputs["D"].default_value = (0.0, 1.0, 0.0, 1)
+            
+            NG_Green_N = Instantiate_Group(Nodes, NG_EFT_Normal)
+            NG_Green_N.location.x = Output_XY.x - 1000
+            NG_Green_N.location.y = Output_XY.y - 900
+            NG_Green_N.parent = Frame_Green
+
+            Links.new(NG_Green.inputs["N Converted"], NG_Green_N.outputs["Fixed Normal"])
+            Links.new(NG_Green.outputs["BSDF"], Mix_12.inputs["Shader_001"])
+
+            
+            # RED material
+            
+            Frame_Red = Nodes.new("NodeFrame")
+            Frame_Red.label = "RED"
+            
+            NG_Red = Instantiate_Group(Nodes, NG_EFT_Opaque)
+            NG_Red.location.x = Output_XY.x - 800
+            NG_Red.location.y = Output_XY.y - 1200
+            NG_Red.parent = Frame_Red
+            NG_Red.inputs["D"].default_value = (1.0, 0.0, 0.0, 1)
+            
+            NG_Red_N = Instantiate_Group(Nodes, NG_EFT_Normal)
+            NG_Red_N.location.x = Output_XY.x - 1000
+            NG_Red_N.location.y = Output_XY.y - 1400
+            NG_Red_N.parent = Frame_Red
+
+            Links.new(NG_Red.inputs["N Converted"], NG_Red_N.outputs["Fixed Normal"])
+            Links.new(NG_Red.outputs["BSDF"], Mix_123.inputs["Shader_001"])
+
+
+            # Mask and color attribute (VP)
+            
+            NG_Mask = Instantiate_Group(Nodes, NG_EFT_VP)
+            NG_Mask.location.x = Output_XY.x - 800
+            NG_Mask.location.y = Output_XY.y + 200
+        
+            Col_Attribute = Nodes.new("ShaderNodeVertexColor")
+            Col_Attribute.location.x = Output_XY.x - 1000
+            Col_Attribute.location.y = Output_XY.y + 100
+
+            Links.new(Col_Attribute.outputs["Color"], NG_Mask.inputs["Color Attribute"])
+            Links.new(Mix_12.inputs["Fac"], NG_Mask.outputs["Mask layers 1-2"])
+            Links.new(Mix_123.inputs["Fac"], NG_Mask.outputs["Mask layers (1-2) - 3"])
+
+        else :
+            # The texture is broken/incomplete, use a bright red BSDF
+            Nodes["Principled BSDF"].inputs["Base Color"].default_value = (1.0, 0.0, 0.0, 1)
+            # Mat.diffuse_color = (1.0, 0.0, 0.0, 1) # Visible solid shading in viewport
+            # Not a good idea as it could override actual color information
 
     else :
         # Delete unused nodes
@@ -303,6 +403,22 @@ def Build_Material_Setup(Mat, Nodes, Links, Has_Diffuse, Has_Normal, Has_Glossy,
         if Has_Diffuse :
             Links.new(D_Texture.outputs["Color"],Shader_Group.inputs["D"])
             Links.new(D_Texture.outputs["Alpha"],Shader_Group.inputs["D alpha"])
+
+            # Adds a multiply node to adjust color
+            # of certain materials
+            # (corresponds to Viewport display > Color)
+            if list(Mat.diffuse_color) != [1.0, 1.0, 1.0, 1.000000] :
+                if not "puddle" in Mat.name.lower() :
+                    Node_Mult = Nodes.new(type = "ShaderNodeMix")
+                    Node_Mult.data_type = "RGBA"
+                    Node_Mult.blend_type = "MULTIPLY"
+                    Node_Mult.inputs[7].default_value = Mat.diffuse_color
+            
+                    Links.new(Node_Mult.outputs["Result"], Shader_Group.inputs["D"])
+                    Links.new(Node_Mult.inputs[6], D_Texture.outputs["Color"])
+
+                    Node_Mult.location.x -= 220
+                    Node_Mult.location.y += 500 
 
         if Has_Normal :
             Normal_Group = Instantiate_Group(Nodes, NG_EFT_Normal)
@@ -442,7 +558,8 @@ def Is_Shader_Emissive(Nodes, TEX_PATH, D_Texture, Is_DGN, Emissive_Texture_Name
 #%% MAIN
 
 def start(NODE_DELETE_LIST, DGN_TYPE_LIST, ATLAS_EXCEPTIONS, TRANSPARENT_NAMES, OBJ_TO_DELETE, EMISSIVE_TYPE_LIST,
-          NG_EFT_Normal, NG_EFT_Opaque, NG_EFT_Emissive, NG_EFT_Transparent, NG_EFT_Puddle, MAKE_CSV, TEX_PATH) :
+          NG_EFT_Normal, NG_EFT_Opaque, NG_EFT_Emissive, NG_EFT_Transparent, NG_EFT_Puddle, NG_EFT_VP,
+          MAKE_CSV, TEX_PATH) :
 
     print("------ EFT MATERIAL SETUP START ------")
 
@@ -460,12 +577,12 @@ def start(NODE_DELETE_LIST, DGN_TYPE_LIST, ATLAS_EXCEPTIONS, TRANSPARENT_NAMES, 
     print("--- Starting material setup ---")
 
     Emissive_Texture_Names = Find_Emissive(TEX_PATH, EMISSIVE_TYPE_LIST)
-    print(Emissive_Texture_Names)
+    #print(Emissive_Texture_Names)
 
     for Mat in bpy.data.materials :
     #for Mat in [bpy.data.materials["material name"]]: # for debug
 
-        print(Mat.name)
+        #print(Mat.name)
 
         Links = Mat.node_tree.links
         Nodes = Mat.node_tree.nodes
@@ -482,7 +599,7 @@ def start(NODE_DELETE_LIST, DGN_TYPE_LIST, ATLAS_EXCEPTIONS, TRANSPARENT_NAMES, 
         Build_Material_Setup(Mat, Nodes, Links, Has_Diffuse, Has_Normal, Has_Glossy, Is_Transparent,
                             Has_Emissive, D_Texture, N_Texture, G_Texture, E_Texture,
                             NG_EFT_Opaque, NG_EFT_Transparent, NG_EFT_Emissive, NG_EFT_Normal,
-                            NG_EFT_Puddle, NODE_DELETE_LIST)
+                            NG_EFT_Puddle, NG_EFT_VP, NODE_DELETE_LIST)
 
         Add_To_Log(Mat, Mat_Log_List, Texture_Log_List, Transparent_Log_List,
                 Emissive_Log_List, Has_Diffuse, Has_Normal, Has_Glossy,

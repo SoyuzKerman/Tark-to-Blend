@@ -3,7 +3,7 @@ schema_version = "1.0.0"
 # Example of manifest file for a Blender extension
 # Change the values according to your extension
 id = "tark_to_blend"
-version = "1.0.0"
+version = "1.2.1"
 name = "Tark To Blend"
 tagline = "Scene cleanup and material setup for Escape from Tarkov levels imported with Assetstudio"
 maintainer = "Soyuz Kerman"

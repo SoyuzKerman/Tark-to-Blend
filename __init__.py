@@ -1,7 +1,7 @@
 bl_info = {
     "name": "Tark to Blend",
     "author": "Soyuz Kerman",
-    "version": (1,0,0),
+    "version": (1,2,1),
     "blender": (5, 2, 0),
     "location": "3D Viewport > Sidebar > Tark to Blend",
     "description": "Scene cleanup and material setup for Escape from Tarkov levels imported with Assetstudio",
@@ -14,7 +14,7 @@ import bpy
 import time
 import os
 
-from . import assignmat, cleanup, nodes, tarkdata
+from . import assignmat, cleanup, nodes, tarkdata, merge
 
 
 class UI_Settings(bpy.types.PropertyGroup) :
@@ -41,11 +41,12 @@ class UI_Settings(bpy.types.PropertyGroup) :
         subtype='DIR_PATH' # FILE_PATH
         )
 
-class UI_Panel(bpy.types.Panel) :
+class VIEW3D_PT_UI_Panel(bpy.types.Panel) :
     bl_space_type = "VIEW_3D"   # 3D Viewport
     bl_region_type = "UI"       # Sidebar
     bl_label = "Tark to Blend"  # Panel name
     bl_category = "Tark to Blend" # Sidebar name
+    bl_idname = "VIEW3D_PT_UI_Panel"
     
     def draw_header(self, context) :
         self.layout.label(text="", icon='MATERIAL_DATA')
@@ -82,6 +83,9 @@ class UI_Panel(bpy.types.Panel) :
         row5 = box2.row()
         row5.operator("ttb.main", text="Start process", icon="PLAY")
 
+        row6 = box2.row()
+        row6.operator("ttb.merge", text = "Merge duplicate data", icon="HAND")
+
         warningrow = box2.row()
         warningrow.alert = True
         warningrow.label(text="Blender may freeze. Do not touch", icon="FREEZE")
@@ -89,7 +93,8 @@ class UI_Panel(bpy.types.Panel) :
 
 class OT_Main(bpy.types.Operator) :
     bl_idname = "ttb.main" # having "." in the name is mandatory
-    bl_label = "Main Operator"
+    bl_label = "TtB Main Operator"
+    bl_description = "Uses the texture folder to automatically complete the material setup."
     
     def execute(self, context) :
         scene = context.scene
@@ -114,18 +119,28 @@ class OT_Main(bpy.types.Operator) :
         NG_EFT_Emissive = nodes.NG_Shader_Em(node_name = "EFT_Shader_Emissive")
         NG_EFT_Transparent = nodes.NG_Shader_Hair(node_name = "EFT_Shader_Hair")
         NG_EFT_Puddle = nodes.NG_Shader_Puddle(node_name = "EFT_Puddle")
+        NG_EFT_VP = nodes.NG_Shader_VP(node_name = "EFT_VP_Mask")
         print("Node groups created")
 
         assignmat.start(NODE_DELETE_LIST, DGN_TYPE_LIST, ATLAS_EXCEPTIONS, TRANSPARENT_NAMES, OBJ_TO_DELETE, EMISSIVE_TYPE_LIST,
-                       NG_EFT_Normal, NG_EFT_Opaque, NG_EFT_Emissive, NG_EFT_Transparent, NG_EFT_Puddle,MAKE_CSV, TEX_PATH)
+                       NG_EFT_Normal, NG_EFT_Opaque, NG_EFT_Emissive, NG_EFT_Transparent, NG_EFT_Puddle, NG_EFT_VP,
+                       MAKE_CSV, TEX_PATH)
 
         Time_Final_s = round(time.time()-Time_0,6)
         print(f"Execution time : {Time_Final_s} s")
 
         return {'FINISHED'} # is mandatory
 
+class OT_Merge(bpy.types.Operator) :
+    bl_idname = "ttb.merge" # having "." in the name is mandatory
+    bl_label = "TtB Merge Operator"
+    bl_description = "Remove duplicate materials, texture and node groups, then removes unused data. Useful after appending several LEVEL files to a same blend file."
+    
+    def execute(self, context) :
+        merge.start()
+        return {'FINISHED'}
 
-Class_List = [OT_Main, UI_Settings, UI_Panel]
+Class_List = [OT_Main, OT_Merge, UI_Settings, VIEW3D_PT_UI_Panel]
 
 
 def register() :

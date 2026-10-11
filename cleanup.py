@@ -12,17 +12,21 @@ def start(Cleanup_Toggle) :
 
         # Find empties and scale the root
         for obj in Objects :
-            
+
+            if obj.parent == None :
+            # The only object that does not have a parent
+            # is the root object that must be scaled
+                obj.scale = (1,1,1)
+            # For some reason it's imported with 0.01 scale
+
             if obj.type == "EMPTY" :
-                Empty_List.append(obj.name)
+
+                if obj.animation_data == None :
+                    # Avoid deleting empties that contain animations
+                    # (for characters)
+                    Empty_List.append(obj.name)
                 
-                if obj.parent == None :
-                # The only object that does not have a parent
-                # is the root object that must be scaled
-                    obj.scale = (1,1,1)
-                # For some reason it's imported with 0.01 scale
-                    
-                print(obj.name)
+                #print(obj.name)
 
         #print(Empty_List)
 
