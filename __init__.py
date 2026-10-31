@@ -1,7 +1,7 @@
 bl_info = {
     "name": "Tark to Blend",
     "author": "Soyuz Kerman",
-    "version": (1,2,1),
+    "version": (1,3,0),
     "blender": (5, 2, 0),
     "location": "3D Viewport > Sidebar > Tark to Blend",
     "description": "Scene cleanup and material setup for Escape from Tarkov levels imported with Assetstudio",
@@ -90,6 +90,14 @@ class VIEW3D_PT_UI_Panel(bpy.types.Panel) :
         warningrow.alert = True
         warningrow.label(text="Blender may freeze. Do not touch", icon="FREEZE")
 
+        box3 = self.layout.box()
+
+        row7 = box3.row()
+        row7.label(text="Character rig fix")
+
+        row8 = box3.row()
+        row8.operator("ttb.rig", text = "Fix VG naming and parent rig", icon="ARMATURE_DATA")
+
 
 class OT_Main(bpy.types.Operator) :
     bl_idname = "ttb.main" # having "." in the name is mandatory
@@ -140,7 +148,16 @@ class OT_Merge(bpy.types.Operator) :
         merge.start()
         return {'FINISHED'}
 
-Class_List = [OT_Main, OT_Merge, UI_Settings, VIEW3D_PT_UI_Panel]
+class OT_Rig(bpy.types.Operator) :
+    bl_idname = "ttb.rig"
+    bl_label = "TtB Rig cleanup"
+    bl_description = "Fixes Vertex Group naming to be compatible with Rigify. Parents the objects to the rig."
+
+    def execute(self, context) :
+        cleanup.rig()
+        return {'FINISHED'}
+
+Class_List = [OT_Main, OT_Merge, UI_Settings, VIEW3D_PT_UI_Panel, OT_Rig]
 
 
 def register() :

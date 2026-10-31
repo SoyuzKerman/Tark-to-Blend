@@ -49,3 +49,32 @@ def start(Cleanup_Toggle) :
             if obj.parent == None :
                 obj.scale = (1,1,1)
         print("Scene scaled, no cleanup")
+
+
+def rig():
+    for Obj in bpy.data.objects :
+        if Obj.type != 'MESH': continue
+        Mod = Obj.modifiers
+        
+        if len(Mod) > 0 :
+            # Find the modifier (0 by default)
+            Armature_Mod = Mod[0]
+            
+            if Armature_Mod.type != 'ARMATURE': continue
+            
+            # Get name of new rig
+            Current_Rig_Name = Armature_Mod.object.name
+            New_Rig_Name = "RIG-" + Current_Rig_Name
+            
+            # Assign new rig to all objects
+            Armature_Mod.object = bpy.data.objects[New_Rig_Name]
+        
+            # From https://extensions.blender.org/add-ons/rigi-all/
+            # Fix Vertex Group naming for Rigify.
+            armature = Armature_Mod.object
+            for group in Obj.vertex_groups:
+                if not armature.data.bones.get('DEF-' + group.name): continue
+                group.name = 'DEF-' + group.name
+            
+            # Parent all objects to the rig
+            Obj.parent = bpy.data.objects[New_Rig_Name]
