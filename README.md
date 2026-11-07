@@ -128,3 +128,11 @@ However, you don't need to do this, and you can simply append the Rigify rig wit
 - Append  `RIG-Skeleton` from an existing Tarkov character (for example my [Black Division Pack](https://open3dlab.com/project/849a0410-fd79-43f7-8d8e-4d994304bcc6/)).
 - Click `Fix VG naming and parent rig` to attach it to the meshes.
 - Done !
+
+## Debug option
+
+A debug button was added in v1.4.1 :
+<img width="238" height="145" alt="image" src="https://github.com/user-attachments/assets/27acd3a6-dafc-4863-afe2-221ccb55c572" />
+Toggling it will print material information in the console :
+<img width="550" height="280" alt="image" src="https://github.com/user-attachments/assets/d9e85ebe-d593-4f29-85aa-25f023cc6a3a" />
+This is useful in case you need to find a material which causes an error.
