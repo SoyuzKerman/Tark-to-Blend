@@ -133,6 +133,8 @@ However, you don't need to do this, and you can simply append the Rigify rig wit
 
 A debug button was added in v1.4.1 :
 <img width="238" height="145" alt="image" src="https://github.com/user-attachments/assets/27acd3a6-dafc-4863-afe2-221ccb55c572" />
+
 Toggling it will print material information in the console :
 <img width="550" height="280" alt="image" src="https://github.com/user-attachments/assets/d9e85ebe-d593-4f29-85aa-25f023cc6a3a" />
+
 This is useful in case you need to find a material which causes an error.
