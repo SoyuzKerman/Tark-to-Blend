@@ -118,9 +118,13 @@ Here is an example of a final result :
 
 ## Rigging function
 
-Refer to the [character porting tutorial on my website](https://soyuzkerman.net/article/tarkov-char/0-0-introduction/).
-Using the [Rigi-All add-on](https://extensions.blender.org/add-ons/rigi-all/), a Rigify rig can be generated with the in-game rig. The `Fix VG naming and parent rig` button allows to :
-- Change the Armature modifier of each object to use the new rig
-- Parent each object to the new rig
+<img width="235" height="88" alt="image" src="https://github.com/user-attachments/assets/fd0666b9-785a-4a86-bdc5-a2623adf6859" />
 
-This is useful when porting multiple items attached to the same skeleton.
+I originally created a Rigify version of the Tarkov rig with the [Rigi-All](https://extensions.blender.org/add-ons/rigi-all/) add-on. It is part of my [Black Division Pack](https://open3dlab.com/project/849a0410-fd79-43f7-8d8e-4d994304bcc6/). To do this, refer to the [character porting tutorial on my website](https://soyuzkerman.net/article/tarkov-char/0-0-introduction/). Once the Rigify rig is generated, click `Fix VG naming and parent rig` to attach it to the meshes.
+
+However, you don't need to do this, and you can simply append the Rigify rig without Rigi-All by following this method :
+- Import a character with its default "Skeleton" rig.
+- Click `Fix bone naming` to rename the bones so that they match Blender's symmetry convention (this function is taken straight from Rigi-All).
+- Append  `RIG-Skeleton` from an existing Tarkov character (for example my [Black Division Pack](https://open3dlab.com/project/849a0410-fd79-43f7-8d8e-4d994304bcc6/)).
+- Click `Fix VG naming and parent rig` to attach it to the meshes.
+- Done !
