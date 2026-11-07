@@ -133,7 +133,7 @@ However, you don't need to do this, and you can simply append the Rigify rig wit
 
 A debug button was added in v1.4.1 :
 
-img width="238" height="145" alt="image" src="https://github.com/user-attachments/assets/27acd3a6-dafc-4863-afe2-221ccb55c572" />
+<img width="238" height="145" alt="image" src="https://github.com/user-attachments/assets/27acd3a6-dafc-4863-afe2-221ccb55c572" />
 
 Toggling it will print material information in the console :
 
