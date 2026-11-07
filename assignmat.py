@@ -559,7 +559,7 @@ def Is_Shader_Emissive(Nodes, TEX_PATH, D_Texture, Is_DGN, Emissive_Texture_Name
 
 def start(NODE_DELETE_LIST, DGN_TYPE_LIST, ATLAS_EXCEPTIONS, TRANSPARENT_NAMES, OBJ_TO_DELETE, EMISSIVE_TYPE_LIST,
           NG_EFT_Normal, NG_EFT_Opaque, NG_EFT_Emissive, NG_EFT_Transparent, NG_EFT_Puddle, NG_EFT_VP,
-          MAKE_CSV, TEX_PATH) :
+          MAKE_CSV, TEX_PATH, DEBUG) :
 
     print("------ EFT MATERIAL SETUP START ------")
 
@@ -582,7 +582,9 @@ def start(NODE_DELETE_LIST, DGN_TYPE_LIST, ATLAS_EXCEPTIONS, TRANSPARENT_NAMES, 
     for Mat in bpy.data.materials :
     #for Mat in [bpy.data.materials["material name"]]: # for debug
 
-        #print(Mat.name)
+        if DEBUG :
+            print("----------")
+            print(Mat.name)
 
         Links = Mat.node_tree.links
         Nodes = Mat.node_tree.nodes
@@ -595,6 +597,9 @@ def start(NODE_DELETE_LIST, DGN_TYPE_LIST, ATLAS_EXCEPTIONS, TRANSPARENT_NAMES, 
         E_Texture, Has_Emissive = Is_Shader_Emissive(Nodes, TEX_PATH, D_Texture, Is_DGN, Emissive_Texture_Names, Emissive_Log_List)
 
         G_Texture, Has_Glossy = Find_G_Texture(Nodes, Has_Diffuse, Has_Normal, D_Texture, N_Texture, Is_DGN, TEX_PATH, DGN_TYPE_LIST)
+
+        if DEBUG :
+            print(f"Diffuse={Has_Diffuse}, Glossy={Has_Glossy}, Normal={Has_Normal}, Transparent={Is_Transparent}, Emissive={Has_Emissive}")
 
         Build_Material_Setup(Mat, Nodes, Links, Has_Diffuse, Has_Normal, Has_Glossy, Is_Transparent,
                             Has_Emissive, D_Texture, N_Texture, G_Texture, E_Texture,

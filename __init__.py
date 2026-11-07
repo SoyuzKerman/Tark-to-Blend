@@ -1,7 +1,7 @@
 bl_info = {
     "name": "Tark to Blend",
     "author": "Soyuz Kerman",
-    "version": (1,4,0),
+    "version": (1,4,1),
     "blender": (5, 2, 0),
     "location": "3D Viewport > Sidebar > Tark to Blend",
     "description": "Scene cleanup and material setup for Escape from Tarkov levels imported with Assetstudio",
@@ -22,6 +22,13 @@ class UI_Settings(bpy.types.PropertyGroup) :
     Clean_Scene : bpy.props.BoolProperty(
         name="Clean Scene",
         description="Removes parenting and delete empties",
+        #icon = "EMPTY_DATA",
+        default = False
+        )
+
+    Debug_Toggle : bpy.props.BoolProperty(
+        name="Print debug",
+        description="Prints debug information (material name) in the console",
         #icon = "EMPTY_DATA",
         default = False
         )
@@ -68,6 +75,8 @@ class VIEW3D_PT_UI_Panel(bpy.types.Panel) :
         row2 = box0.row()
         row2.prop(panel, "Save_CSV", text="Save CSV", icon = "CURRENT_FILE")
         
+        row21 = box0.row()
+        row21.prop(panel, "Debug_Toggle", text="Debug print", icon = "STATUS_INFO_FILLED")
         
         box1 = self.layout.box()
         
@@ -101,7 +110,6 @@ class VIEW3D_PT_UI_Panel(bpy.types.Panel) :
         row9 = box3.row()
         row9.operator("ttb.rig", text = "Fix VG naming and parent rig", icon="ARMATURE_DATA")
 
-
 class OT_Main(bpy.types.Operator) :
     bl_idname = "ttb.main" # having "." in the name is mandatory
     bl_label = "TtB Main Operator"
@@ -113,6 +121,7 @@ class OT_Main(bpy.types.Operator) :
 
         MAKE_CSV = panel.Save_CSV
         TEX_PATH = panel.Tex_Dir_Path
+        DEBUG = panel.Debug_Toggle
 
         if not os.path.exists(os.path.dirname(TEX_PATH)) :
             raise SyntaxError("Texture folder does not exist.")
@@ -135,7 +144,7 @@ class OT_Main(bpy.types.Operator) :
 
         assignmat.start(NODE_DELETE_LIST, DGN_TYPE_LIST, ATLAS_EXCEPTIONS, TRANSPARENT_NAMES, OBJ_TO_DELETE, EMISSIVE_TYPE_LIST,
                        NG_EFT_Normal, NG_EFT_Opaque, NG_EFT_Emissive, NG_EFT_Transparent, NG_EFT_Puddle, NG_EFT_VP,
-                       MAKE_CSV, TEX_PATH)
+                       MAKE_CSV, TEX_PATH, DEBUG)
 
         Time_Final_s = round(time.time()-Time_0,6)
         print(f"Execution time : {Time_Final_s} s")
