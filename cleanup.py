@@ -78,3 +78,19 @@ def rig():
             
             # Parent all objects to the rig
             Obj.parent = bpy.data.objects[New_Rig_Name]
+
+
+def rename_bones(Rig_Name, Left_KW, Right_KW) :
+    # inspired by Rigi-All fix symmetry function
+    # https://extensions.blender.org/add-ons/rigi-all/
+    Arm = bpy.data.objects[Rig_Name].data
+    # bpy.data.objects["Skeleton"] is the rig object
+    #bpy.data.objects["Skeleton"].data is the armature
+
+    Bones = Arm.bones
+
+    for bone in Bones :
+        if Left_KW in bone.name:
+            bone.name = bone.name.replace(Left_KW, '_') + '.L'
+        elif Right_KW in bone.name:
+            bone.name = bone.name.replace(Right_KW, '_') + '.R'

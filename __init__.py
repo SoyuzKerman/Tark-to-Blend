@@ -1,7 +1,7 @@
 bl_info = {
     "name": "Tark to Blend",
     "author": "Soyuz Kerman",
-    "version": (1,3,0),
+    "version": (1,4,0),
     "blender": (5, 2, 0),
     "location": "3D Viewport > Sidebar > Tark to Blend",
     "description": "Scene cleanup and material setup for Escape from Tarkov levels imported with Assetstudio",
@@ -93,10 +93,13 @@ class VIEW3D_PT_UI_Panel(bpy.types.Panel) :
         box3 = self.layout.box()
 
         row7 = box3.row()
-        row7.label(text="Character rig fix")
+        row7.label(text="Character rig fixes :")
 
         row8 = box3.row()
-        row8.operator("ttb.rig", text = "Fix VG naming and parent rig", icon="ARMATURE_DATA")
+        row8.operator("ttb.bone", text = "Fix bone naming", icon="BONE_DATA")
+
+        row9 = box3.row()
+        row9.operator("ttb.rig", text = "Fix VG naming and parent rig", icon="ARMATURE_DATA")
 
 
 class OT_Main(bpy.types.Operator) :
@@ -157,7 +160,17 @@ class OT_Rig(bpy.types.Operator) :
         cleanup.rig()
         return {'FINISHED'}
 
-Class_List = [OT_Main, OT_Merge, UI_Settings, VIEW3D_PT_UI_Panel, OT_Rig]
+class OT_Bone_Rename(bpy.types.Operator) :
+    bl_idname = "ttb.bone"
+    bl_label = "TtB Bone rename"
+    bl_description = "Rename bones to be compatible with Blender's symmetry system."
+
+    def execute(self, context) :
+        cleanup.rename_bones("Skeleton", " HumanL", " HumanR")
+        return {'FINISHED'}
+
+
+Class_List = [OT_Main, OT_Merge, UI_Settings, VIEW3D_PT_UI_Panel, OT_Rig, OT_Bone_Rename]
 
 
 def register() :
