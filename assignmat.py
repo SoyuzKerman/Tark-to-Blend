@@ -69,7 +69,11 @@ def Node_Tree_Mapping(Nodes) :
         D_Texture = Nodes["Image Texture"]
 
     elif not Has_Diffuse and Has_Normal :
-        N_Texture = Nodes["Image Texture"]
+        try :
+            N_Texture = Nodes["Image Texture"]
+        except :
+            Has_Normal = False
+            print("WARNING : Normal Map node exists but no texture is connected.")
 
     return D_Texture, N_Texture, Has_Diffuse, Has_Normal
 
