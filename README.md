@@ -57,10 +57,11 @@ The actual scene is hidden behind objects that will be deleted by the add-on. If
 3. If you previously put the textures in a separate folder, check if the textures are missing by using **Material Preview**. If everything is pink, the textures are missing. Go to File > External data > Find missing files, and select your "textures" folder.
 4. In the **3D Viewport**, press **N** to open the **side panel** and go to the "Tark to Blend" panel.
 
-<img width="239" height="265" alt="6_addon" src="https://github.com/user-attachments/assets/799579d6-e8e8-43bc-9d25-09c2f0c6da1d" />
+<img width="238" height="409" alt="image" src="https://github.com/user-attachments/assets/2a2bd80b-11ed-4879-8792-6c0f31e5fa4d" />
 
 5. To use the panel :
     - *Clean scene* will remove all empties. **This is recommended for maps, but not characters** as it will break some animations (more precisely, the item animations).
+    - *Fix red normal maps* will add a custom node group to convert red normal maps to their correct format. This is useful if the textures were extracted with AssetStudioMod 0.19 and earlier, which produces "red normal maps". This was fixed in AssetStudioMod 0.20 so this option is for backcompatibility.
     - *Save CSV* will create a CSV file with all material properties in your "textures" folder. **This is intended for debug and you do not need to use it**.
     - Click on the folder icon to indicate the path to your "texture" folder. This is where the program will search for missing textures. **This is mandatory**.
     - Before starting the program, you can toggle the Blender console in Window > Toggle system console.
