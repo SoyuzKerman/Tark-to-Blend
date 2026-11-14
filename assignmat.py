@@ -257,7 +257,7 @@ def Find_G_Texture(Nodes, Has_Diffuse, Has_Normal, D_Texture, N_Texture, Is_DGN,
 def Build_Material_Setup(Mat, Nodes, Links, Has_Diffuse, Has_Normal, Has_Glossy, Is_Transparent,
                         Has_Emissive, D_Texture, N_Texture, G_Texture, E_Texture,
                         NG_EFT_Opaque, NG_EFT_Transparent, NG_EFT_Emissive, NG_EFT_Normal,
-                        NG_EFT_Puddle, NG_EFT_VP, NODE_DELETE_LIST) :
+                        NG_EFT_Puddle, NG_EFT_VP, NODE_DELETE_LIST, RED_NMAP) :
     # Adds nodes to the material node tree and connects them.
     # Nodes : Mat.node_tree.nodes
     # Links : Mat.node_tree.links
@@ -309,7 +309,7 @@ def Build_Material_Setup(Mat, Nodes, Links, Has_Diffuse, Has_Normal, Has_Glossy,
             NG_Blue_N.location.y = Output_XY.y - 400
             NG_Blue_N.parent = Frame_Blue
             
-            Links.new(NG_Blue.inputs["N Converted"], NG_Blue_N.outputs["Fixed Normal"])
+            Links.new(NG_Blue.inputs["N"], NG_Blue_N.outputs["Fixed Normal"])
             Links.new(NG_Blue.outputs["BSDF"], Mix_12.inputs["Shader"])
 
             # GREEN material
@@ -328,7 +328,7 @@ def Build_Material_Setup(Mat, Nodes, Links, Has_Diffuse, Has_Normal, Has_Glossy,
             NG_Green_N.location.y = Output_XY.y - 900
             NG_Green_N.parent = Frame_Green
 
-            Links.new(NG_Green.inputs["N Converted"], NG_Green_N.outputs["Fixed Normal"])
+            Links.new(NG_Green.inputs["N"], NG_Green_N.outputs["Fixed Normal"])
             Links.new(NG_Green.outputs["BSDF"], Mix_12.inputs["Shader_001"])
 
             
@@ -348,7 +348,7 @@ def Build_Material_Setup(Mat, Nodes, Links, Has_Diffuse, Has_Normal, Has_Glossy,
             NG_Red_N.location.y = Output_XY.y - 1400
             NG_Red_N.parent = Frame_Red
 
-            Links.new(NG_Red.inputs["N Converted"], NG_Red_N.outputs["Fixed Normal"])
+            Links.new(NG_Red.inputs["N"], NG_Red_N.outputs["Fixed Normal"])
             Links.new(NG_Red.outputs["BSDF"], Mix_123.inputs["Shader_001"])
 
 
@@ -425,11 +425,14 @@ def Build_Material_Setup(Mat, Nodes, Links, Has_Diffuse, Has_Normal, Has_Glossy,
                     Node_Mult.location.y += 500 
 
         if Has_Normal :
-            Normal_Group = Instantiate_Group(Nodes, NG_EFT_Normal)
-            Links.new(N_Texture.outputs["Color"],Normal_Group.inputs[0])
-            Links.new(N_Texture.outputs["Alpha"],Normal_Group.inputs[1])
-            Links.new(Shader_Group.inputs["N Converted"],Normal_Group.outputs[0])
-            Normal_Group.location = (-220,-10)
+            if RED_NMAP :
+                Normal_Group = Instantiate_Group(Nodes, NG_EFT_Normal)
+                Links.new(N_Texture.outputs["Color"],Normal_Group.inputs[0])
+                Links.new(N_Texture.outputs["Alpha"],Normal_Group.inputs[1])
+                Links.new(Shader_Group.inputs["N"],Normal_Group.outputs[0])
+                Normal_Group.location = (-220,-10)
+            else :
+                Links.new(N_Texture.outputs["Color"],Shader_Group.inputs["N"])
         else :
             #Shader_Group.inputs["N Strength"].default_value = 0
             pass
@@ -563,7 +566,7 @@ def Is_Shader_Emissive(Nodes, TEX_PATH, D_Texture, Is_DGN, Emissive_Texture_Name
 
 def start(NODE_DELETE_LIST, DGN_TYPE_LIST, ATLAS_EXCEPTIONS, TRANSPARENT_NAMES, OBJ_TO_DELETE, EMISSIVE_TYPE_LIST,
           NG_EFT_Normal, NG_EFT_Opaque, NG_EFT_Emissive, NG_EFT_Transparent, NG_EFT_Puddle, NG_EFT_VP,
-          MAKE_CSV, TEX_PATH, DEBUG) :
+          MAKE_CSV, TEX_PATH, DEBUG, RED_NMAP) :
 
     print("------ EFT MATERIAL SETUP START ------")
 
@@ -608,7 +611,7 @@ def start(NODE_DELETE_LIST, DGN_TYPE_LIST, ATLAS_EXCEPTIONS, TRANSPARENT_NAMES, 
         Build_Material_Setup(Mat, Nodes, Links, Has_Diffuse, Has_Normal, Has_Glossy, Is_Transparent,
                             Has_Emissive, D_Texture, N_Texture, G_Texture, E_Texture,
                             NG_EFT_Opaque, NG_EFT_Transparent, NG_EFT_Emissive, NG_EFT_Normal,
-                            NG_EFT_Puddle, NG_EFT_VP, NODE_DELETE_LIST)
+                            NG_EFT_Puddle, NG_EFT_VP, NODE_DELETE_LIST, RED_NMAP)
 
         Add_To_Log(Mat, Mat_Log_List, Texture_Log_List, Transparent_Log_List,
                 Emissive_Log_List, Has_Diffuse, Has_Normal, Has_Glossy,

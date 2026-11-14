@@ -401,10 +401,10 @@ def NG_Shader(node_name = "EFT_Shader_DGN"):
     g_socket.structure_type = 'AUTO'
 
     # Socket N Converted
-    n_converted_socket = eft_shader_dgn_1.interface.new_socket(name="N Converted", in_out='INPUT', socket_type='NodeSocketColor')
+    n_converted_socket = eft_shader_dgn_1.interface.new_socket(name="N", in_out='INPUT', socket_type='NodeSocketColor')
     n_converted_socket.default_value = (0.5, 0.5, 1.0, 1.0)
     n_converted_socket.attribute_domain = 'POINT'
-    n_converted_socket.description = "Converted Normal map input"
+    n_converted_socket.description = "Normal map input. Needs a converter node if the texture extract with AssetStudio is red (0.19 and lower)."
     n_converted_socket.default_input = 'VALUE'
     n_converted_socket.structure_type = 'AUTO'
 
@@ -414,68 +414,68 @@ def NG_Shader(node_name = "EFT_Shader_DGN"):
     principled_bsdf_001 = eft_shader_dgn_1.nodes.new("ShaderNodeBsdfPrincipled")
     principled_bsdf_001.name = "Principled BSDF.001"
     principled_bsdf_001.show_options = True
-    principled_bsdf_001.distribution = 'MULTI_GGX'
-    principled_bsdf_001.subsurface_method = 'RANDOM_WALK_LEGACY'
-    principled_bsdf_001.panel_states[0].is_collapsed = True
-    principled_bsdf_001.panel_states[1].is_collapsed = True
-    principled_bsdf_001.panel_states[2].is_collapsed = True
-    principled_bsdf_001.panel_states[3].is_collapsed = True
-    principled_bsdf_001.panel_states[4].is_collapsed = True
-    principled_bsdf_001.panel_states[5].is_collapsed = True
-    principled_bsdf_001.panel_states[6].is_collapsed = True
-    principled_bsdf_001.panel_states[7].is_collapsed = True
-    # IOR
-    principled_bsdf_001.inputs[3].default_value = 1.0
-    # Alpha
-    principled_bsdf_001.inputs[4].default_value = 1.0
-    # Thin Wall
-    principled_bsdf_001.inputs[5].default_value = False
-    # Diffuse Roughness
-    principled_bsdf_001.inputs[8].default_value = 0.0
-    # Subsurface Weight
-    principled_bsdf_001.inputs[9].default_value = 0.0
-    # Subsurface Radius
-    principled_bsdf_001.inputs[10].default_value = (1.0, 0.20000000298023224, 0.10000000149011612)
-    # Subsurface Scale
-    principled_bsdf_001.inputs[11].default_value = 0.05000000074505806
-    # Subsurface Anisotropy
-    principled_bsdf_001.inputs[13].default_value = 0.0
-    # Specular IOR Level
-    principled_bsdf_001.inputs[14].default_value = 0.5
-    # Specular Tint
-    principled_bsdf_001.inputs[15].default_value = (1.0, 1.0, 1.0, 1.0)
-    # Anisotropic
-    principled_bsdf_001.inputs[16].default_value = 0.0
-    # Anisotropic Rotation
-    principled_bsdf_001.inputs[17].default_value = 0.0
-    # Tangent
-    principled_bsdf_001.inputs[18].default_value = (0.0, 0.0, 0.0)
-    # Transmission Weight
-    principled_bsdf_001.inputs[19].default_value = 0.0
-    # Coat Weight
-    principled_bsdf_001.inputs[20].default_value = 0.0
-    # Coat Roughness
-    principled_bsdf_001.inputs[21].default_value = 0.029999999329447746
-    # Coat IOR
-    principled_bsdf_001.inputs[22].default_value = 1.5
-    # Coat Tint
-    principled_bsdf_001.inputs[23].default_value = (1.0, 1.0, 1.0, 1.0)
-    # Coat Normal
-    principled_bsdf_001.inputs[24].default_value = (0.0, 0.0, 0.0)
-    # Sheen Weight
-    principled_bsdf_001.inputs[25].default_value = 0.0
-    # Sheen Roughness
-    principled_bsdf_001.inputs[26].default_value = 0.5
-    # Sheen Tint
-    principled_bsdf_001.inputs[27].default_value = (1.0, 1.0, 1.0, 1.0)
-    # Emission Color
-    principled_bsdf_001.inputs[28].default_value = (1.0, 1.0, 1.0, 1.0)
-    # Emission Strength
-    principled_bsdf_001.inputs[29].default_value = 0.0
-    # Thin Film Thickness
-    principled_bsdf_001.inputs[30].default_value = 0.0
-    # Thin Film IOR
-    principled_bsdf_001.inputs[31].default_value = 1.3300000429153442
+    # principled_bsdf_001.distribution = 'MULTI_GGX'
+    # principled_bsdf_001.subsurface_method = 'RANDOM_WALK_LEGACY'
+    # principled_bsdf_001.panel_states[0].is_collapsed = True
+    # principled_bsdf_001.panel_states[1].is_collapsed = True
+    # principled_bsdf_001.panel_states[2].is_collapsed = True
+    # principled_bsdf_001.panel_states[3].is_collapsed = True
+    # principled_bsdf_001.panel_states[4].is_collapsed = True
+    # principled_bsdf_001.panel_states[5].is_collapsed = True
+    # principled_bsdf_001.panel_states[6].is_collapsed = True
+    # principled_bsdf_001.panel_states[7].is_collapsed = True
+    # # IOR
+    principled_bsdf_001.inputs["IOR"].default_value = 1.0
+    # # Alpha
+    # principled_bsdf_001.inputs[4].default_value = 1.0
+    # # Thin Wall
+    # principled_bsdf_001.inputs[5].default_value = False
+    # # Diffuse Roughness
+    # principled_bsdf_001.inputs[8].default_value = 0.0
+    # # Subsurface Weight
+    # principled_bsdf_001.inputs[9].default_value = 0.0
+    # # Subsurface Radius
+    # principled_bsdf_001.inputs[10].default_value = (1.0, 0.20000000298023224, 0.10000000149011612)
+    # # Subsurface Scale
+    # principled_bsdf_001.inputs[11].default_value = 0.05000000074505806
+    # # Subsurface Anisotropy
+    # principled_bsdf_001.inputs[13].default_value = 0.0
+    # # Specular IOR Level
+    # principled_bsdf_001.inputs[14].default_value = 0.5
+    # # Specular Tint
+    # principled_bsdf_001.inputs[15].default_value = (1.0, 1.0, 1.0, 1.0)
+    # # Anisotropic
+    # principled_bsdf_001.inputs[16].default_value = 0.0
+    # # Anisotropic Rotation
+    # principled_bsdf_001.inputs[17].default_value = 0.0
+    # # Tangent
+    # principled_bsdf_001.inputs[18].default_value = (0.0, 0.0, 0.0)
+    # # Transmission Weight
+    # principled_bsdf_001.inputs[19].default_value = 0.0
+    # # Coat Weight
+    # principled_bsdf_001.inputs[20].default_value = 0.0
+    # # Coat Roughness
+    # principled_bsdf_001.inputs[21].default_value = 0.029999999329447746
+    # # Coat IOR
+    # principled_bsdf_001.inputs[22].default_value = 1.5
+    # # Coat Tint
+    # principled_bsdf_001.inputs[23].default_value = (1.0, 1.0, 1.0, 1.0)
+    # # Coat Normal
+    # principled_bsdf_001.inputs[24].default_value = (0.0, 0.0, 0.0)
+    # # Sheen Weight
+    # principled_bsdf_001.inputs[25].default_value = 0.0
+    # # Sheen Roughness
+    # principled_bsdf_001.inputs[26].default_value = 0.5
+    # # Sheen Tint
+    # principled_bsdf_001.inputs[27].default_value = (1.0, 1.0, 1.0, 1.0)
+    # # Emission Color
+    # principled_bsdf_001.inputs[28].default_value = (1.0, 1.0, 1.0, 1.0)
+    # # Emission Strength
+    # principled_bsdf_001.inputs[29].default_value = 0.0
+    # # Thin Film Thickness
+    # principled_bsdf_001.inputs[30].default_value = 0.0
+    # # Thin Film IOR
+    # principled_bsdf_001.inputs[31].default_value = 1.3300000429153442
 
     # Node Invert Color
     invert_color = eft_shader_dgn_1.nodes.new("ShaderNodeInvert")
@@ -570,37 +570,37 @@ def NG_Shader(node_name = "EFT_Shader_DGN"):
 
     # invert_color.Color -> principled_bsdf_001.Roughness
     eft_shader_dgn_1.links.new(
-        eft_shader_dgn_1.nodes["Invert Color"].outputs[0],
-        eft_shader_dgn_1.nodes["Principled BSDF.001"].inputs[2]
+        eft_shader_dgn_1.nodes["Invert Color"].outputs["Color"],
+        eft_shader_dgn_1.nodes["Principled BSDF.001"].inputs["Roughness"]
     )
     # principled_bsdf_001.BSDF -> group_output.BSDF
     eft_shader_dgn_1.links.new(
-        eft_shader_dgn_1.nodes["Principled BSDF.001"].outputs[0],
-        eft_shader_dgn_1.nodes["Group Output"].inputs[0]
+        eft_shader_dgn_1.nodes["Principled BSDF.001"].outputs["BSDF"],
+        eft_shader_dgn_1.nodes["Group Output"].inputs["BSDF"]
     )
     # group_input.N Converted -> normal_map.Color
     eft_shader_dgn_1.links.new(
-        eft_shader_dgn_1.nodes["Group Input"].outputs[3],
-        eft_shader_dgn_1.nodes["Normal Map"].inputs[1]
+        eft_shader_dgn_1.nodes["Group Input"].outputs["N"],
+        eft_shader_dgn_1.nodes["Normal Map"].inputs["Color"]
     )
     # normal_map.Normal -> principled_bsdf_001.Normal
     eft_shader_dgn_1.links.new(
-        eft_shader_dgn_1.nodes["Normal Map"].outputs[0],
-        eft_shader_dgn_1.nodes["Principled BSDF.001"].inputs[6]
+        eft_shader_dgn_1.nodes["Normal Map"].outputs["Normal"],
+        eft_shader_dgn_1.nodes["Principled BSDF.001"].inputs["Normal"]
     )
     # group_input.G -> invert_color.Color
     eft_shader_dgn_1.links.new(
-        eft_shader_dgn_1.nodes["Group Input"].outputs[2],
-        eft_shader_dgn_1.nodes["Invert Color"].inputs[1]
+        eft_shader_dgn_1.nodes["Group Input"].outputs["G"],
+        eft_shader_dgn_1.nodes["Invert Color"].inputs["Color"]
     )
     # group_input.D -> reroute.Input
     eft_shader_dgn_1.links.new(
-        eft_shader_dgn_1.nodes["Group Input"].outputs[0],
+        eft_shader_dgn_1.nodes["Group Input"].outputs["D"],
         eft_shader_dgn_1.nodes["Reroute"].inputs[0]
     )
     # group_input.D alpha -> reroute_002.Input
     eft_shader_dgn_1.links.new(
-        eft_shader_dgn_1.nodes["Group Input"].outputs[1],
+        eft_shader_dgn_1.nodes["Group Input"].outputs["D alpha"],
         eft_shader_dgn_1.nodes["Reroute.002"].inputs[0]
     )
     # reroute.Output -> reroute_001.Input
@@ -616,12 +616,12 @@ def NG_Shader(node_name = "EFT_Shader_DGN"):
     # reroute_001.Output -> principled_bsdf_001.Base Color
     eft_shader_dgn_1.links.new(
         eft_shader_dgn_1.nodes["Reroute.001"].outputs[0],
-        eft_shader_dgn_1.nodes["Principled BSDF.001"].inputs[0]
+        eft_shader_dgn_1.nodes["Principled BSDF.001"].inputs["Base Color"]
     )
     # reroute_003.Output -> principled_bsdf_001.Metallic
     eft_shader_dgn_1.links.new(
         eft_shader_dgn_1.nodes["Reroute.003"].outputs[0],
-        eft_shader_dgn_1.nodes["Principled BSDF.001"].inputs[1]
+        eft_shader_dgn_1.nodes["Principled BSDF.001"].inputs["Metallic"]
     )
 
     return eft_shader_dgn_1
@@ -671,10 +671,10 @@ def NG_Shader_Em(node_name = "EFT_Shader_Emissive"):
     g_socket.structure_type = 'AUTO'
 
     # Socket N Converted
-    n_converted_socket = eft_shader_emissive_1.interface.new_socket(name="N Converted", in_out='INPUT', socket_type='NodeSocketColor')
+    n_converted_socket = eft_shader_emissive_1.interface.new_socket(name="N", in_out='INPUT', socket_type='NodeSocketColor')
     n_converted_socket.default_value = (0.5, 0.5, 1.0, 1.0)
     n_converted_socket.attribute_domain = 'POINT'
-    n_converted_socket.description = "Converted Normal map"
+    n_converted_socket.description = "Normal map input. Needs a converter node if the texture extract with AssetStudio is red (0.19 and lower)."
     n_converted_socket.default_input = 'VALUE'
     n_converted_socket.structure_type = 'AUTO'
 
@@ -713,64 +713,64 @@ def NG_Shader_Em(node_name = "EFT_Shader_Emissive"):
     principled_bsdf_001 = eft_shader_emissive_1.nodes.new("ShaderNodeBsdfPrincipled")
     principled_bsdf_001.name = "Principled BSDF.001"
     principled_bsdf_001.show_options = True
-    principled_bsdf_001.distribution = 'MULTI_GGX'
-    principled_bsdf_001.subsurface_method = 'RANDOM_WALK_LEGACY'
-    principled_bsdf_001.panel_states[0].is_collapsed = True
-    principled_bsdf_001.panel_states[1].is_collapsed = True
-    principled_bsdf_001.panel_states[2].is_collapsed = True
-    principled_bsdf_001.panel_states[3].is_collapsed = True
-    principled_bsdf_001.panel_states[4].is_collapsed = True
-    principled_bsdf_001.panel_states[5].is_collapsed = True
-    principled_bsdf_001.panel_states[6].is_collapsed = False
-    principled_bsdf_001.panel_states[7].is_collapsed = True
-    # IOR
-    principled_bsdf_001.inputs[3].default_value = 1.0
-    # Alpha
-    principled_bsdf_001.inputs[4].default_value = 1.0
-    # Thin Wall
-    principled_bsdf_001.inputs[5].default_value = False
-    # Diffuse Roughness
-    principled_bsdf_001.inputs[8].default_value = 0.0
-    # Subsurface Weight
-    principled_bsdf_001.inputs[9].default_value = 0.0
-    # Subsurface Radius
-    principled_bsdf_001.inputs[10].default_value = (1.0, 0.20000000298023224, 0.10000000149011612)
-    # Subsurface Scale
-    principled_bsdf_001.inputs[11].default_value = 0.05000000074505806
-    # Subsurface Anisotropy
-    principled_bsdf_001.inputs[13].default_value = 0.0
-    # Specular IOR Level
-    principled_bsdf_001.inputs[14].default_value = 0.5
-    # Specular Tint
-    principled_bsdf_001.inputs[15].default_value = (1.0, 1.0, 1.0, 1.0)
-    # Anisotropic
-    principled_bsdf_001.inputs[16].default_value = 0.0
-    # Anisotropic Rotation
-    principled_bsdf_001.inputs[17].default_value = 0.0
-    # Tangent
-    principled_bsdf_001.inputs[18].default_value = (0.0, 0.0, 0.0)
-    # Transmission Weight
-    principled_bsdf_001.inputs[19].default_value = 0.0
-    # Coat Weight
-    principled_bsdf_001.inputs[20].default_value = 0.0
-    # Coat Roughness
-    principled_bsdf_001.inputs[21].default_value = 0.029999999329447746
-    # Coat IOR
-    principled_bsdf_001.inputs[22].default_value = 1.5
-    # Coat Tint
-    principled_bsdf_001.inputs[23].default_value = (1.0, 1.0, 1.0, 1.0)
-    # Coat Normal
-    principled_bsdf_001.inputs[24].default_value = (0.0, 0.0, 0.0)
-    # Sheen Weight
-    principled_bsdf_001.inputs[25].default_value = 0.0
-    # Sheen Roughness
-    principled_bsdf_001.inputs[26].default_value = 0.5
-    # Sheen Tint
-    principled_bsdf_001.inputs[27].default_value = (1.0, 1.0, 1.0, 1.0)
-    # Thin Film Thickness
-    principled_bsdf_001.inputs[30].default_value = 0.0
-    # Thin Film IOR
-    principled_bsdf_001.inputs[31].default_value = 1.3300000429153442
+    # principled_bsdf_001.distribution = 'MULTI_GGX'
+    # principled_bsdf_001.subsurface_method = 'RANDOM_WALK_LEGACY'
+    # principled_bsdf_001.panel_states[0].is_collapsed = True
+    # principled_bsdf_001.panel_states[1].is_collapsed = True
+    # principled_bsdf_001.panel_states[2].is_collapsed = True
+    # principled_bsdf_001.panel_states[3].is_collapsed = True
+    # principled_bsdf_001.panel_states[4].is_collapsed = True
+    # principled_bsdf_001.panel_states[5].is_collapsed = True
+    # principled_bsdf_001.panel_states[6].is_collapsed = False
+    # principled_bsdf_001.panel_states[7].is_collapsed = True
+    # # IOR
+    principled_bsdf_001.inputs["IOR"].default_value = 1.0
+    # # Alpha
+    # principled_bsdf_001.inputs[4].default_value = 1.0
+    # # Thin Wall
+    # principled_bsdf_001.inputs[5].default_value = False
+    # # Diffuse Roughness
+    # principled_bsdf_001.inputs[8].default_value = 0.0
+    # # Subsurface Weight
+    # principled_bsdf_001.inputs[9].default_value = 0.0
+    # # Subsurface Radius
+    # principled_bsdf_001.inputs[10].default_value = (1.0, 0.20000000298023224, 0.10000000149011612)
+    # # Subsurface Scale
+    # principled_bsdf_001.inputs[11].default_value = 0.05000000074505806
+    # # Subsurface Anisotropy
+    # principled_bsdf_001.inputs[13].default_value = 0.0
+    # # Specular IOR Level
+    # principled_bsdf_001.inputs[14].default_value = 0.5
+    # # Specular Tint
+    # principled_bsdf_001.inputs[15].default_value = (1.0, 1.0, 1.0, 1.0)
+    # # Anisotropic
+    # principled_bsdf_001.inputs[16].default_value = 0.0
+    # # Anisotropic Rotation
+    # principled_bsdf_001.inputs[17].default_value = 0.0
+    # # Tangent
+    # principled_bsdf_001.inputs[18].default_value = (0.0, 0.0, 0.0)
+    # # Transmission Weight
+    # principled_bsdf_001.inputs[19].default_value = 0.0
+    # # Coat Weight
+    # principled_bsdf_001.inputs[20].default_value = 0.0
+    # # Coat Roughness
+    # principled_bsdf_001.inputs[21].default_value = 0.029999999329447746
+    # # Coat IOR
+    # principled_bsdf_001.inputs[22].default_value = 1.5
+    # # Coat Tint
+    # principled_bsdf_001.inputs[23].default_value = (1.0, 1.0, 1.0, 1.0)
+    # # Coat Normal
+    # principled_bsdf_001.inputs[24].default_value = (0.0, 0.0, 0.0)
+    # # Sheen Weight
+    # principled_bsdf_001.inputs[25].default_value = 0.0
+    # # Sheen Roughness
+    # principled_bsdf_001.inputs[26].default_value = 0.5
+    # # Sheen Tint
+    # principled_bsdf_001.inputs[27].default_value = (1.0, 1.0, 1.0, 1.0)
+    # # Thin Film Thickness
+    # principled_bsdf_001.inputs[30].default_value = 0.0
+    # # Thin Film IOR
+    # principled_bsdf_001.inputs[31].default_value = 1.3300000429153442
 
     # Node Invert Color
     invert_color = eft_shader_emissive_1.nodes.new("ShaderNodeInvert")
@@ -890,47 +890,47 @@ def NG_Shader_Em(node_name = "EFT_Shader_Emissive"):
 
     # normal_map.Normal -> principled_bsdf_001.Normal
     eft_shader_emissive_1.links.new(
-        eft_shader_emissive_1.nodes["Normal Map"].outputs[0],
-        eft_shader_emissive_1.nodes["Principled BSDF.001"].inputs[6]
+        eft_shader_emissive_1.nodes["Normal Map"].outputs["Normal"],
+        eft_shader_emissive_1.nodes["Principled BSDF.001"].inputs["Normal"]
     )
     # invert_color.Color -> principled_bsdf_001.Roughness
     eft_shader_emissive_1.links.new(
-        eft_shader_emissive_1.nodes["Invert Color"].outputs[0],
-        eft_shader_emissive_1.nodes["Principled BSDF.001"].inputs[2]
+        eft_shader_emissive_1.nodes["Invert Color"].outputs["Color"],
+        eft_shader_emissive_1.nodes["Principled BSDF.001"].inputs["Roughness"]
     )
     # principled_bsdf_001.BSDF -> group_output.BSDF
     eft_shader_emissive_1.links.new(
-        eft_shader_emissive_1.nodes["Principled BSDF.001"].outputs[0],
-        eft_shader_emissive_1.nodes["Group Output"].inputs[0]
+        eft_shader_emissive_1.nodes["Principled BSDF.001"].outputs["BSDF"],
+        eft_shader_emissive_1.nodes["Group Output"].inputs["BSDF"]
     )
     # group_input.N Converted -> normal_map.Color
     eft_shader_emissive_1.links.new(
-        eft_shader_emissive_1.nodes["Group Input"].outputs[3],
-        eft_shader_emissive_1.nodes["Normal Map"].inputs[1]
+        eft_shader_emissive_1.nodes["Group Input"].outputs["N"],
+        eft_shader_emissive_1.nodes["Normal Map"].inputs["Color"]
     )
     # group_input.G -> invert_color.Color
     eft_shader_emissive_1.links.new(
-        eft_shader_emissive_1.nodes["Group Input"].outputs[2],
-        eft_shader_emissive_1.nodes["Invert Color"].inputs[1]
+        eft_shader_emissive_1.nodes["Group Input"].outputs["G"],
+        eft_shader_emissive_1.nodes["Invert Color"].inputs["Color"]
     )
     # group_input.E -> reroute.Input
     eft_shader_emissive_1.links.new(
-        eft_shader_emissive_1.nodes["Group Input"].outputs[4],
+        eft_shader_emissive_1.nodes["Group Input"].outputs["E"],
         eft_shader_emissive_1.nodes["Reroute"].inputs[0]
     )
     # group_input.Emission Strength -> reroute_002.Input
     eft_shader_emissive_1.links.new(
-        eft_shader_emissive_1.nodes["Group Input"].outputs[5],
+        eft_shader_emissive_1.nodes["Group Input"].outputs["Emission Strength"],
         eft_shader_emissive_1.nodes["Reroute.002"].inputs[0]
     )
     # group_input.D -> reroute_004.Input
     eft_shader_emissive_1.links.new(
-        eft_shader_emissive_1.nodes["Group Input"].outputs[0],
+        eft_shader_emissive_1.nodes["Group Input"].outputs["D"],
         eft_shader_emissive_1.nodes["Reroute.004"].inputs[0]
     )
     # group_input.D alpha -> reroute_006.Input
     eft_shader_emissive_1.links.new(
-        eft_shader_emissive_1.nodes["Group Input"].outputs[1],
+        eft_shader_emissive_1.nodes["Group Input"].outputs["D alpha"],
         eft_shader_emissive_1.nodes["Reroute.006"].inputs[0]
     )
     # reroute.Output -> reroute_001.Input
@@ -956,22 +956,22 @@ def NG_Shader_Em(node_name = "EFT_Shader_Emissive"):
     # reroute_005.Output -> principled_bsdf_001.Base Color
     eft_shader_emissive_1.links.new(
         eft_shader_emissive_1.nodes["Reroute.005"].outputs[0],
-        eft_shader_emissive_1.nodes["Principled BSDF.001"].inputs[0]
+        eft_shader_emissive_1.nodes["Principled BSDF.001"].inputs["Base Color"]
     )
     # reroute_007.Output -> principled_bsdf_001.Metallic
     eft_shader_emissive_1.links.new(
         eft_shader_emissive_1.nodes["Reroute.007"].outputs[0],
-        eft_shader_emissive_1.nodes["Principled BSDF.001"].inputs[1]
+        eft_shader_emissive_1.nodes["Principled BSDF.001"].inputs["Metallic"]
     )
     # reroute_001.Output -> principled_bsdf_001.Emission Color
     eft_shader_emissive_1.links.new(
         eft_shader_emissive_1.nodes["Reroute.001"].outputs[0],
-        eft_shader_emissive_1.nodes["Principled BSDF.001"].inputs[28]
+        eft_shader_emissive_1.nodes["Principled BSDF.001"].inputs["Emission Color"]
     )
     # reroute_003.Output -> principled_bsdf_001.Emission Strength
     eft_shader_emissive_1.links.new(
         eft_shader_emissive_1.nodes["Reroute.003"].outputs[0],
-        eft_shader_emissive_1.nodes["Principled BSDF.001"].inputs[29]
+        eft_shader_emissive_1.nodes["Principled BSDF.001"].inputs["Emission Strength"]
     )
 
     return eft_shader_emissive_1
@@ -1022,10 +1022,10 @@ def NG_Shader_Hair(node_name = "EFT_Shader_Hair"):
     g_socket.structure_type = 'AUTO'
 
     # Socket N Converted
-    n_converted_socket = eft_shader_hair_1.interface.new_socket(name="N Converted", in_out='INPUT', socket_type='NodeSocketColor')
+    n_converted_socket = eft_shader_hair_1.interface.new_socket(name="N", in_out='INPUT', socket_type='NodeSocketColor')
     n_converted_socket.default_value = (0.5, 0.5, 1.0, 1.0)
     n_converted_socket.attribute_domain = 'POINT'
-    n_converted_socket.description = "Converted Normal map"
+    n_converted_socket.description = "Normal map input. Needs a converter node if the texture extract with AssetStudio is red (0.19 and lower)."
     n_converted_socket.default_input = 'VALUE'
     n_converted_socket.structure_type = 'AUTO'
 
@@ -1046,68 +1046,68 @@ def NG_Shader_Hair(node_name = "EFT_Shader_Hair"):
     principled_bsdf_001 = eft_shader_hair_1.nodes.new("ShaderNodeBsdfPrincipled")
     principled_bsdf_001.name = "Principled BSDF.001"
     principled_bsdf_001.show_options = True
-    principled_bsdf_001.distribution = 'MULTI_GGX'
-    principled_bsdf_001.subsurface_method = 'RANDOM_WALK_LEGACY'
-    principled_bsdf_001.panel_states[0].is_collapsed = True
-    principled_bsdf_001.panel_states[1].is_collapsed = True
-    principled_bsdf_001.panel_states[2].is_collapsed = True
-    principled_bsdf_001.panel_states[3].is_collapsed = True
-    principled_bsdf_001.panel_states[4].is_collapsed = True
-    principled_bsdf_001.panel_states[5].is_collapsed = True
-    principled_bsdf_001.panel_states[6].is_collapsed = True
-    principled_bsdf_001.panel_states[7].is_collapsed = True
-    # Metallic
-    principled_bsdf_001.inputs[1].default_value = 0.0
-    # IOR
-    principled_bsdf_001.inputs[3].default_value = 1.0
-    # Thin Wall
-    principled_bsdf_001.inputs[5].default_value = False
-    # Diffuse Roughness
-    principled_bsdf_001.inputs[8].default_value = 0.0
-    # Subsurface Weight
-    principled_bsdf_001.inputs[9].default_value = 0.0
-    # Subsurface Radius
-    principled_bsdf_001.inputs[10].default_value = (1.0, 0.20000000298023224, 0.10000000149011612)
-    # Subsurface Scale
-    principled_bsdf_001.inputs[11].default_value = 0.05000000074505806
-    # Subsurface Anisotropy
-    principled_bsdf_001.inputs[13].default_value = 0.0
-    # Specular IOR Level
-    principled_bsdf_001.inputs[14].default_value = 0.5
-    # Specular Tint
-    principled_bsdf_001.inputs[15].default_value = (1.0, 1.0, 1.0, 1.0)
-    # Anisotropic
-    principled_bsdf_001.inputs[16].default_value = 0.0
-    # Anisotropic Rotation
-    principled_bsdf_001.inputs[17].default_value = 0.0
-    # Tangent
-    principled_bsdf_001.inputs[18].default_value = (0.0, 0.0, 0.0)
-    # Transmission Weight
-    principled_bsdf_001.inputs[19].default_value = 0.0
-    # Coat Weight
-    principled_bsdf_001.inputs[20].default_value = 0.0
-    # Coat Roughness
-    principled_bsdf_001.inputs[21].default_value = 0.029999999329447746
-    # Coat IOR
-    principled_bsdf_001.inputs[22].default_value = 1.5
-    # Coat Tint
-    principled_bsdf_001.inputs[23].default_value = (1.0, 1.0, 1.0, 1.0)
-    # Coat Normal
-    principled_bsdf_001.inputs[24].default_value = (0.0, 0.0, 0.0)
-    # Sheen Weight
-    principled_bsdf_001.inputs[25].default_value = 0.0
-    # Sheen Roughness
-    principled_bsdf_001.inputs[26].default_value = 0.5
-    # Sheen Tint
-    principled_bsdf_001.inputs[27].default_value = (1.0, 1.0, 1.0, 1.0)
-    # Emission Color
-    principled_bsdf_001.inputs[28].default_value = (1.0, 1.0, 1.0, 1.0)
-    # Emission Strength
-    principled_bsdf_001.inputs[29].default_value = 0.0
-    # Thin Film Thickness
-    principled_bsdf_001.inputs[30].default_value = 0.0
-    # Thin Film IOR
-    principled_bsdf_001.inputs[31].default_value = 1.3300000429153442
+    # principled_bsdf_001.distribution = 'MULTI_GGX'
+    # principled_bsdf_001.subsurface_method = 'RANDOM_WALK_LEGACY'
+    # principled_bsdf_001.panel_states[0].is_collapsed = True
+    # principled_bsdf_001.panel_states[1].is_collapsed = True
+    # principled_bsdf_001.panel_states[2].is_collapsed = True
+    # principled_bsdf_001.panel_states[3].is_collapsed = True
+    # principled_bsdf_001.panel_states[4].is_collapsed = True
+    # principled_bsdf_001.panel_states[5].is_collapsed = True
+    # principled_bsdf_001.panel_states[6].is_collapsed = True
+    # principled_bsdf_001.panel_states[7].is_collapsed = True
+    # # Metallic
+    # principled_bsdf_001.inputs[1].default_value = 0.0
+    # # IOR
+    principled_bsdf_001.inputs["IOR"].default_value = 1.0
+    # # Thin Wall
+    # principled_bsdf_001.inputs[5].default_value = False
+    # # Diffuse Roughness
+    # principled_bsdf_001.inputs[8].default_value = 0.0
+    # # Subsurface Weight
+    # principled_bsdf_001.inputs[9].default_value = 0.0
+    # # Subsurface Radius
+    # principled_bsdf_001.inputs[10].default_value = (1.0, 0.20000000298023224, 0.10000000149011612)
+    # # Subsurface Scale
+    # principled_bsdf_001.inputs[11].default_value = 0.05000000074505806
+    # # Subsurface Anisotropy
+    # principled_bsdf_001.inputs[13].default_value = 0.0
+    # # Specular IOR Level
+    # principled_bsdf_001.inputs[14].default_value = 0.5
+    # # Specular Tint
+    # principled_bsdf_001.inputs[15].default_value = (1.0, 1.0, 1.0, 1.0)
+    # # Anisotropic
+    # principled_bsdf_001.inputs[16].default_value = 0.0
+    # # Anisotropic Rotation
+    # principled_bsdf_001.inputs[17].default_value = 0.0
+    # # Tangent
+    # principled_bsdf_001.inputs[18].default_value = (0.0, 0.0, 0.0)
+    # # Transmission Weight
+    # principled_bsdf_001.inputs[19].default_value = 0.0
+    # # Coat Weight
+    # principled_bsdf_001.inputs[20].default_value = 0.0
+    # # Coat Roughness
+    # principled_bsdf_001.inputs[21].default_value = 0.029999999329447746
+    # # Coat IOR
+    # principled_bsdf_001.inputs[22].default_value = 1.5
+    # # Coat Tint
+    # principled_bsdf_001.inputs[23].default_value = (1.0, 1.0, 1.0, 1.0)
+    # # Coat Normal
+    # principled_bsdf_001.inputs[24].default_value = (0.0, 0.0, 0.0)
+    # # Sheen Weight
+    # principled_bsdf_001.inputs[25].default_value = 0.0
+    # # Sheen Roughness
+    # principled_bsdf_001.inputs[26].default_value = 0.5
+    # # Sheen Tint
+    # principled_bsdf_001.inputs[27].default_value = (1.0, 1.0, 1.0, 1.0)
+    # # Emission Color
+    # principled_bsdf_001.inputs[28].default_value = (1.0, 1.0, 1.0, 1.0)
+    # # Emission Strength
+    # principled_bsdf_001.inputs[29].default_value = 0.0
+    # # Thin Film Thickness
+    # principled_bsdf_001.inputs[30].default_value = 0.0
+    # # Thin Film IOR
+    # principled_bsdf_001.inputs[31].default_value = 1.3300000429153442
 
     # Node Invert Color
     invert_color = eft_shader_hair_1.nodes.new("ShaderNodeInvert")
@@ -1191,37 +1191,37 @@ def NG_Shader_Hair(node_name = "EFT_Shader_Hair"):
 
     # normal_map.Normal -> principled_bsdf_001.Normal
     eft_shader_hair_1.links.new(
-        eft_shader_hair_1.nodes["Normal Map"].outputs[0],
-        eft_shader_hair_1.nodes["Principled BSDF.001"].inputs[6]
+        eft_shader_hair_1.nodes["Normal Map"].outputs["Normal"],
+        eft_shader_hair_1.nodes["Principled BSDF.001"].inputs["Normal"]
     )
     # invert_color.Color -> principled_bsdf_001.Roughness
     eft_shader_hair_1.links.new(
-        eft_shader_hair_1.nodes["Invert Color"].outputs[0],
-        eft_shader_hair_1.nodes["Principled BSDF.001"].inputs[2]
+        eft_shader_hair_1.nodes["Invert Color"].outputs["Color"],
+        eft_shader_hair_1.nodes["Principled BSDF.001"].inputs["Roughness"]
     )
     # principled_bsdf_001.BSDF -> group_output.BSDF
     eft_shader_hair_1.links.new(
-        eft_shader_hair_1.nodes["Principled BSDF.001"].outputs[0],
-        eft_shader_hair_1.nodes["Group Output"].inputs[0]
+        eft_shader_hair_1.nodes["Principled BSDF.001"].outputs["BSDF"],
+        eft_shader_hair_1.nodes["Group Output"].inputs["BSDF"]
     )
     # group_input.N Converted -> normal_map.Color
     eft_shader_hair_1.links.new(
-        eft_shader_hair_1.nodes["Group Input"].outputs[3],
-        eft_shader_hair_1.nodes["Normal Map"].inputs[1]
+        eft_shader_hair_1.nodes["Group Input"].outputs["N"],
+        eft_shader_hair_1.nodes["Normal Map"].inputs["Color"]
     )
     # group_input.G -> invert_color.Color
     eft_shader_hair_1.links.new(
-        eft_shader_hair_1.nodes["Group Input"].outputs[2],
-        eft_shader_hair_1.nodes["Invert Color"].inputs[1]
+        eft_shader_hair_1.nodes["Group Input"].outputs["G"],
+        eft_shader_hair_1.nodes["Invert Color"].inputs["Color"]
     )
     # group_input.D -> reroute.Input
     eft_shader_hair_1.links.new(
-        eft_shader_hair_1.nodes["Group Input"].outputs[0],
+        eft_shader_hair_1.nodes["Group Input"].outputs["D"],
         eft_shader_hair_1.nodes["Reroute"].inputs[0]
     )
     # group_input.D alpha -> reroute_002.Input
     eft_shader_hair_1.links.new(
-        eft_shader_hair_1.nodes["Group Input"].outputs[1],
+        eft_shader_hair_1.nodes["Group Input"].outputs["D alpha"],
         eft_shader_hair_1.nodes["Reroute.002"].inputs[0]
     )
     # reroute.Output -> reroute_001.Input
@@ -1237,12 +1237,12 @@ def NG_Shader_Hair(node_name = "EFT_Shader_Hair"):
     # reroute_001.Output -> principled_bsdf_001.Base Color
     eft_shader_hair_1.links.new(
         eft_shader_hair_1.nodes["Reroute.001"].outputs[0],
-        eft_shader_hair_1.nodes["Principled BSDF.001"].inputs[0]
+        eft_shader_hair_1.nodes["Principled BSDF.001"].inputs["Base Color"]
     )
     # reroute_003.Output -> principled_bsdf_001.Alpha
     eft_shader_hair_1.links.new(
         eft_shader_hair_1.nodes["Reroute.003"].outputs[0],
-        eft_shader_hair_1.nodes["Principled BSDF.001"].inputs[4]
+        eft_shader_hair_1.nodes["Principled BSDF.001"].inputs["Alpha"]
     )
 
     return eft_shader_hair_1
@@ -1287,72 +1287,72 @@ def NG_Shader_Puddle(node_name = "EFT_Puddle") :
     principled_bsdf = eft_puddle_1.nodes.new("ShaderNodeBsdfPrincipled")
     principled_bsdf.name = "Principled BSDF"
     principled_bsdf.show_options = True
-    principled_bsdf.distribution = 'MULTI_GGX'
-    principled_bsdf.subsurface_method = 'RANDOM_WALK'
-    principled_bsdf.panel_states[0].is_collapsed = True
-    principled_bsdf.panel_states[1].is_collapsed = True
-    principled_bsdf.panel_states[2].is_collapsed = False
-    principled_bsdf.panel_states[3].is_collapsed = True
-    principled_bsdf.panel_states[4].is_collapsed = True
-    principled_bsdf.panel_states[5].is_collapsed = True
-    principled_bsdf.panel_states[6].is_collapsed = True
-    principled_bsdf.panel_states[7].is_collapsed = True
-    # Metallic
-    principled_bsdf.inputs[1].default_value = 0.0
-    # Roughness
-    principled_bsdf.inputs[2].default_value = 0.09365558624267578
-    # IOR
-    principled_bsdf.inputs[3].default_value = 1.3329999446868896
-    # Thin Wall
-    principled_bsdf.inputs[5].default_value = False
-    # Normal
-    principled_bsdf.inputs[6].default_value = (0.0, 0.0, 0.0)
-    # Diffuse Roughness
-    principled_bsdf.inputs[8].default_value = 0.0
-    # Subsurface Weight
-    principled_bsdf.inputs[9].default_value = 0.0
-    # Subsurface Radius
-    principled_bsdf.inputs[10].default_value = (1.0, 0.20000000298023224, 0.10000000149011612)
-    # Subsurface Scale
-    principled_bsdf.inputs[11].default_value = 0.004999999888241291
-    # Subsurface Anisotropy
-    principled_bsdf.inputs[13].default_value = 0.0
-    # Specular IOR Level
-    principled_bsdf.inputs[14].default_value = 0.33000001311302185
-    # Specular Tint
-    principled_bsdf.inputs[15].default_value = (1.0, 1.0, 1.0, 1.0)
-    # Anisotropic
-    principled_bsdf.inputs[16].default_value = 0.0
-    # Anisotropic Rotation
-    principled_bsdf.inputs[17].default_value = 0.0
-    # Tangent
-    principled_bsdf.inputs[18].default_value = (0.0, 0.0, 0.0)
-    # Transmission Weight
-    principled_bsdf.inputs[19].default_value = 0.0
-    # Coat Weight
-    principled_bsdf.inputs[20].default_value = 0.0
-    # Coat Roughness
-    principled_bsdf.inputs[21].default_value = 0.029999999329447746
-    # Coat IOR
-    principled_bsdf.inputs[22].default_value = 1.5
-    # Coat Tint
-    principled_bsdf.inputs[23].default_value = (1.0, 1.0, 1.0, 1.0)
-    # Coat Normal
-    principled_bsdf.inputs[24].default_value = (0.0, 0.0, 0.0)
-    # Sheen Weight
-    principled_bsdf.inputs[25].default_value = 0.0
-    # Sheen Roughness
-    principled_bsdf.inputs[26].default_value = 0.5
-    # Sheen Tint
-    principled_bsdf.inputs[27].default_value = (1.0, 1.0, 1.0, 1.0)
-    # Emission Color
-    principled_bsdf.inputs[28].default_value = (1.0, 1.0, 1.0, 1.0)
-    # Emission Strength
-    principled_bsdf.inputs[29].default_value = 0.0
-    # Thin Film Thickness
-    principled_bsdf.inputs[30].default_value = 0.0
-    # Thin Film IOR
-    principled_bsdf.inputs[31].default_value = 1.3300000429153442
+    # principled_bsdf.distribution = 'MULTI_GGX'
+    # principled_bsdf.subsurface_method = 'RANDOM_WALK'
+    # principled_bsdf.panel_states[0].is_collapsed = True
+    # principled_bsdf.panel_states[1].is_collapsed = True
+    # principled_bsdf.panel_states[2].is_collapsed = False
+    # principled_bsdf.panel_states[3].is_collapsed = True
+    # principled_bsdf.panel_states[4].is_collapsed = True
+    # principled_bsdf.panel_states[5].is_collapsed = True
+    # principled_bsdf.panel_states[6].is_collapsed = True
+    # principled_bsdf.panel_states[7].is_collapsed = True
+    # # Metallic
+    principled_bsdf.inputs["Metallic"].default_value = 0.0
+    # # Roughness
+    principled_bsdf.inputs["Roughness"].default_value = 0.09365558624267578
+    # # IOR
+    principled_bsdf.inputs["IOR"].default_value = 1.3329999446868896
+    # # Thin Wall
+    # principled_bsdf.inputs[5].default_value = False
+    # # Normal
+    # principled_bsdf.inputs[6].default_value = (0.0, 0.0, 0.0)
+    # # Diffuse Roughness
+    # principled_bsdf.inputs[8].default_value = 0.0
+    # # Subsurface Weight
+    # principled_bsdf.inputs[9].default_value = 0.0
+    # # Subsurface Radius
+    # principled_bsdf.inputs[10].default_value = (1.0, 0.20000000298023224, 0.10000000149011612)
+    # # Subsurface Scale
+    # principled_bsdf.inputs[11].default_value = 0.004999999888241291
+    # # Subsurface Anisotropy
+    # principled_bsdf.inputs[13].default_value = 0.0
+    # # Specular IOR Level
+    # principled_bsdf.inputs[14].default_value = 0.33000001311302185
+    # # Specular Tint
+    # principled_bsdf.inputs[15].default_value = (1.0, 1.0, 1.0, 1.0)
+    # # Anisotropic
+    # principled_bsdf.inputs[16].default_value = 0.0
+    # # Anisotropic Rotation
+    # principled_bsdf.inputs[17].default_value = 0.0
+    # # Tangent
+    # principled_bsdf.inputs[18].default_value = (0.0, 0.0, 0.0)
+    # # Transmission Weight
+    # principled_bsdf.inputs[19].default_value = 0.0
+    # # Coat Weight
+    # principled_bsdf.inputs[20].default_value = 0.0
+    # # Coat Roughness
+    # principled_bsdf.inputs[21].default_value = 0.029999999329447746
+    # # Coat IOR
+    # principled_bsdf.inputs[22].default_value = 1.5
+    # # Coat Tint
+    # principled_bsdf.inputs[23].default_value = (1.0, 1.0, 1.0, 1.0)
+    # # Coat Normal
+    # principled_bsdf.inputs[24].default_value = (0.0, 0.0, 0.0)
+    # # Sheen Weight
+    # principled_bsdf.inputs[25].default_value = 0.0
+    # # Sheen Roughness
+    # principled_bsdf.inputs[26].default_value = 0.5
+    # # Sheen Tint
+    # principled_bsdf.inputs[27].default_value = (1.0, 1.0, 1.0, 1.0)
+    # # Emission Color
+    # principled_bsdf.inputs[28].default_value = (1.0, 1.0, 1.0, 1.0)
+    # # Emission Strength
+    # principled_bsdf.inputs[29].default_value = 0.0
+    # # Thin Film Thickness
+    # principled_bsdf.inputs[30].default_value = 0.0
+    # # Thin Film IOR
+    # principled_bsdf.inputs[31].default_value = 1.3300000429153442
 
     # Node Mix Shader
     mix_shader = eft_puddle_1.nodes.new("ShaderNodeMixShader")
@@ -1458,53 +1458,53 @@ def NG_Shader_Puddle(node_name = "EFT_Puddle") :
 
     # group_input.D alpha -> principled_bsdf.Alpha
     eft_puddle_1.links.new(
-        eft_puddle_1.nodes["Group Input"].outputs[1],
-        eft_puddle_1.nodes["Principled BSDF"].inputs[4]
+        eft_puddle_1.nodes["Group Input"].outputs["D alpha"],
+        eft_puddle_1.nodes["Principled BSDF"].inputs["Alpha"]
     )
     # group_input.D -> principled_bsdf.Base Color
     eft_puddle_1.links.new(
-        eft_puddle_1.nodes["Group Input"].outputs[0],
-        eft_puddle_1.nodes["Principled BSDF"].inputs[0]
+        eft_puddle_1.nodes["Group Input"].outputs["D"],
+        eft_puddle_1.nodes["Principled BSDF"].inputs["Base Color"]
     )
     # mix_shader.Shader -> group_output.BSDF
     eft_puddle_1.links.new(
-        eft_puddle_1.nodes["Mix Shader"].outputs[0],
-        eft_puddle_1.nodes["Group Output"].inputs[0]
+        eft_puddle_1.nodes["Mix Shader"].outputs["Shader"],
+        eft_puddle_1.nodes["Group Output"].inputs["BSDF"]
     )
     # fresnel.Factor -> math.Value
     eft_puddle_1.links.new(
-        eft_puddle_1.nodes["Fresnel"].outputs[0],
-        eft_puddle_1.nodes["Math"].inputs[1]
+        eft_puddle_1.nodes["Fresnel"].outputs["Factor"],
+        eft_puddle_1.nodes["Math"].inputs["Value"]
     )
     # map_range.Result -> math.Value
     eft_puddle_1.links.new(
-        eft_puddle_1.nodes["Map Range"].outputs[0],
-        eft_puddle_1.nodes["Math"].inputs[0]
+        eft_puddle_1.nodes["Map Range"].outputs["Result"],
+        eft_puddle_1.nodes["Math"].inputs["Value"]
     )
     # math.Value -> mix_shader.Factor
     eft_puddle_1.links.new(
-        eft_puddle_1.nodes["Math"].outputs[0],
-        eft_puddle_1.nodes["Mix Shader"].inputs[0]
+        eft_puddle_1.nodes["Math"].outputs["Value"],
+        eft_puddle_1.nodes["Mix Shader"].inputs["Factor"]
     )
     # transparent_bsdf.BSDF -> mix_shader.Shader
     eft_puddle_1.links.new(
-        eft_puddle_1.nodes["Transparent BSDF"].outputs[0],
-        eft_puddle_1.nodes["Mix Shader"].inputs[1]
+        eft_puddle_1.nodes["Transparent BSDF"].outputs["BSDF"],
+        eft_puddle_1.nodes["Mix Shader"].inputs["Shader"]
     )
     # group_input.D -> map_range.Value
     eft_puddle_1.links.new(
-        eft_puddle_1.nodes["Group Input"].outputs[0],
-        eft_puddle_1.nodes["Map Range"].inputs[0]
+        eft_puddle_1.nodes["Group Input"].outputs["D"],
+        eft_puddle_1.nodes["Map Range"].inputs["Value"]
     )
     # principled_bsdf.BSDF -> reroute.Input
     eft_puddle_1.links.new(
-        eft_puddle_1.nodes["Principled BSDF"].outputs[0],
+        eft_puddle_1.nodes["Principled BSDF"].outputs["BSDF"],
         eft_puddle_1.nodes["Reroute"].inputs[0]
     )
     # reroute.Output -> mix_shader.Shader
     eft_puddle_1.links.new(
         eft_puddle_1.nodes["Reroute"].outputs[0],
-        eft_puddle_1.nodes["Mix Shader"].inputs[2]
+        eft_puddle_1.nodes["Mix Shader"].inputs["Shader"]
     )
 
     return eft_puddle_1

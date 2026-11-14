@@ -1,7 +1,7 @@
 bl_info = {
     "name": "Tark to Blend",
     "author": "Soyuz Kerman",
-    "version": (1,4,1),
+    "version": (1,5,0),
     "blender": (5, 2, 0),
     "location": "3D Viewport > Sidebar > Tark to Blend",
     "description": "Scene cleanup and material setup for Escape from Tarkov levels imported with Assetstudio",
@@ -23,6 +23,13 @@ class UI_Settings(bpy.types.PropertyGroup) :
         name="Clean Scene",
         description="Removes parenting and delete empties",
         #icon = "EMPTY_DATA",
+        default = False
+        )
+
+    Fix_Nmap : bpy.props.BoolProperty(
+        name="Fix red Normal maps",
+        description="Adds a conversion node group to use red normal maps produced by Assestudio mod 0.19 and earlier. DO NOT USE if you extracted textures with AssetStudioMod 0.20+.",
+        #icon = "RGB_RED",
         default = False
         )
 
@@ -71,6 +78,9 @@ class VIEW3D_PT_UI_Panel(bpy.types.Panel) :
         
         row1 = box0.row()
         row1.prop(panel, "Clean_Scene", text="Clean Scene", icon = "EMPTY_DATA")
+
+        row11 = box0.row()
+        row11.prop(panel, "Fix_Nmap", text="Fix red Normal maps", icon = "RGB_RED")
 
         row2 = box0.row()
         row2.prop(panel, "Save_CSV", text="Save CSV", icon = "CURRENT_FILE")
@@ -122,6 +132,7 @@ class OT_Main(bpy.types.Operator) :
         MAKE_CSV = panel.Save_CSV
         TEX_PATH = panel.Tex_Dir_Path
         DEBUG = panel.Debug_Toggle
+        RED_NMAP = panel.Fix_Nmap
 
         if not os.path.exists(os.path.dirname(TEX_PATH)) :
             raise SyntaxError("Texture folder does not exist.")
@@ -144,10 +155,13 @@ class OT_Main(bpy.types.Operator) :
 
         assignmat.start(NODE_DELETE_LIST, DGN_TYPE_LIST, ATLAS_EXCEPTIONS, TRANSPARENT_NAMES, OBJ_TO_DELETE, EMISSIVE_TYPE_LIST,
                        NG_EFT_Normal, NG_EFT_Opaque, NG_EFT_Emissive, NG_EFT_Transparent, NG_EFT_Puddle, NG_EFT_VP,
-                       MAKE_CSV, TEX_PATH, DEBUG)
+                       MAKE_CSV, TEX_PATH, DEBUG, RED_NMAP)
 
         Time_Final_s = round(time.time()-Time_0,6)
         print(f"Execution time : {Time_Final_s} s")
+
+        # Reset texture path
+        panel.Tex_Dir_Path = "PROCESS DONE"
 
         return {'FINISHED'} # is mandatory
 

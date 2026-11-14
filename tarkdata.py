@@ -48,7 +48,8 @@ def load() :
                     "bulletholes_concrete", "Reserve_factroy_glass",
                     "City_glass_broken_transparent", "City_Asphalt_Trim",
                     "Vendors_snow_footprint", "Lab_terragroup_logo", "Loader_01_glass",
-                    "Loader_01_glass_broken", "fence_ema_01_blue_G", "roof_ograda_gray"]
+                    "Loader_01_glass_broken", "fence_ema_01_blue_G", "roof_ograda_gray",
+                    "grille","fan_table_a"]
 
     OBJ_TO_DELETE = ["Cube", "BLOCKER", "Blocker", "LOD1", "LOD2", "LOD3", "LOD4",
                 "Box0", "Plane", "shadow", "Shadow", "SHADOW", "collider",
